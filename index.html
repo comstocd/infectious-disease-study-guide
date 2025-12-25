@@ -1,0 +1,3728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABIM Infectious Disease Study Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-margin-top: 80px; }
+        
+        :root {
+            --primary: #0d4f4f;
+            --primary-light: #1a6b6b;
+            --accent: #e07b53;
+            --accent-light: #f4a582;
+            --bg: #f8f6f3;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --info: #0284c7;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+        
+        /* Header */
+        .main-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        .main-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .main-header .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .build-badge {
+            display: inline-block;
+            background: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 15px 20px;
+            position: sticky;
+            top: 90px;
+            z-index: 99;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .nav-pills {
+            display: flex;
+            gap: 8px;
+            min-width: max-content;
+        }
+        
+        .nav-pill {
+            padding: 8px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.85rem;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        
+        .nav-pill:hover, .nav-pill.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Search */
+        .search-container {
+            padding: 15px 20px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: block;
+            padding: 12px 20px;
+            border: 2px solid var(--border);
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .search-box:focus {
+            border-color: var(--primary);
+        }
+        
+        /* Main Content */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Section Styling */
+        .section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+            scroll-margin-top: 180px;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 20px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .section-header .icon {
+            font-size: 1.5rem;
+        }
+        
+        .section-content {
+            padding: 24px;
+        }
+        
+        /* Topic Cards */
+        .topic {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            scroll-margin-top: 180px;
+        }
+        
+        .topic-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .topic-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .topic-header .badge {
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .topic-content {
+            padding: 20px;
+        }
+        
+        .topic.collapsed .topic-content {
+            display: none;
+        }
+        
+        /* Subsections */
+        .subsection {
+            margin-bottom: 20px;
+        }
+        
+        .subsection-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 12px;
+        }
+        
+        li {
+            margin-bottom: 6px;
+        }
+        
+        li strong {
+            color: var(--primary);
+        }
+        
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        
+        tr:hover {
+            background: #e0f2fe;
+        }
+        
+        /* Special Boxes */
+        .high-yield {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid var(--warning);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 15px 0;
+        }
+        
+        .high-yield-title {
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .pearl-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 4px solid var(--info);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 15px 0;
+        }
+        
+        .pearl-title {
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .danger-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 4px solid var(--danger);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 15px 0;
+        }
+        
+        .danger-title {
+            font-weight: 700;
+            color: #991b1b;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .clinical-vignette {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 4px solid var(--success);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 15px 0;
+        }
+        
+        .vignette-title {
+            font-weight: 700;
+            color: #166534;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .guideline-box {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            border-left: 4px solid #7c3aed;
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 15px 0;
+        }
+        
+        .guideline-title {
+            font-weight: 700;
+            color: #5b21b6;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        /* Mnemonic */
+        .mnemonic {
+            background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%);
+            border: 2px dashed #c026d3;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .mnemonic-title {
+            font-weight: 700;
+            color: #86198f;
+            margin-bottom: 8px;
+        }
+        
+        .mnemonic-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #a21caf;
+            letter-spacing: 1px;
+        }
+        
+        /* Drug spectrum badges */
+        .spectrum {
+            display: inline-flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 8px 0;
+        }
+        
+        .spectrum-badge {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .gp { background: #dbeafe; color: #1e40af; }
+        .gn { background: #dcfce7; color: #166534; }
+        .anaerobe { background: #fef3c7; color: #92400e; }
+        .atypical { background: #f3e8ff; color: #7c3aed; }
+        .mrsa { background: #fee2e2; color: #991b1b; }
+        .pseudomonas { background: #cffafe; color: #0e7490; }
+        
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .back-to-top.show {
+            display: flex;
+        }
+        
+        /* Cross-reference links */
+        .cross-ref {
+            color: var(--info);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--info);
+        }
+        
+        .cross-ref:hover {
+            color: var(--primary);
+            border-bottom-style: solid;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-header h1 { font-size: 1.4rem; }
+            .section-content { padding: 16px; }
+            .topic-content { padding: 16px; }
+            .nav-container { top: 80px; }
+            .section { scroll-margin-top: 160px; }
+            .topic { scroll-margin-top: 160px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="main-header">
+    <h1>🦠 ABIM Infectious Disease Study Guide <span class="build-badge">BUILD #1</span></h1>
+    <p class="subtitle">High-Yield Board Review • Evidence-Based • IDSA/ATS/SCCM Guidelines</p>
+</header>
+
+<nav class="nav-container">
+    <div class="nav-pills">
+        <a href="#principles" class="nav-pill">Principles</a>
+        <a href="#antibiotics" class="nav-pill">Antibiotics</a>
+        <a href="#respiratory" class="nav-pill">Respiratory</a>
+        <a href="#cns" class="nav-pill">CNS</a>
+        <a href="#cardiovascular" class="nav-pill">Cardiovascular</a>
+        <a href="#gi" class="nav-pill">GI/Hepatobiliary</a>
+        <a href="#gu" class="nav-pill">GU</a>
+        <a href="#ssti" class="nav-pill">Skin/Soft Tissue</a>
+        <a href="#bone-joint" class="nav-pill">Bone/Joint</a>
+        <a href="#sepsis" class="nav-pill">Sepsis</a>
+        <a href="#hiv" class="nav-pill">HIV/AIDS</a>
+        <a href="#fungi" class="nav-pill">Fungal</a>
+        <a href="#viral" class="nav-pill">Viral</a>
+        <a href="#parasites" class="nav-pill">Parasites</a>
+        <a href="#travel" class="nav-pill">Travel</a>
+        <a href="#hais" class="nav-pill">HAIs</a>
+        <a href="#immunocompromised" class="nav-pill">Immunocompromised</a>
+        <a href="#prophylaxis" class="nav-pill">Prophylaxis</a>
+    </div>
+</nav>
+
+<div class="search-container">
+    <input type="text" class="search-box" id="searchBox" placeholder="Search topics, pathogens, antibiotics..." autocomplete="off">
+</div>
+
+<main class="content">
+
+<!-- ======================= SECTION 1: PRINCIPLES ======================= -->
+<section class="section" id="principles">
+    <div class="section-header">
+        <h2>📋 Antimicrobial Principles</h2>
+        <span class="icon">🧬</span>
+    </div>
+    <div class="section-content">
+        
+        <div class="topic" id="abx-stewardship">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Antimicrobial Stewardship</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA/SHEA Guidelines (2016, updated 2023)</div>
+                    <ul>
+                        <li><strong>Core elements:</strong> Leadership commitment, accountability, pharmacy expertise, action (interventions), tracking, reporting, education</li>
+                        <li><strong>Goal:</strong> Optimize clinical outcomes while minimizing unintended consequences (resistance, C. diff, adverse effects)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Key Stewardship Interventions</div>
+                    <ul>
+                        <li><strong>Prospective audit with feedback:</strong> ID/pharmacy review with recommendations (most effective)</li>
+                        <li><strong>Formulary restriction/preauthorization:</strong> Requires approval for restricted agents</li>
+                        <li><strong>IV-to-PO conversion:</strong> When patient stable, tolerating PO, GI tract functioning</li>
+                        <li><strong>De-escalation:</strong> Narrow spectrum based on culture data</li>
+                        <li><strong>Dose optimization:</strong> PK/PD-based dosing (extended infusions for β-lactams)</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL</div>
+                    <strong>Procalcitonin-guided therapy:</strong> Can safely reduce antibiotic duration in respiratory infections and sepsis. PCT &lt;0.25 ng/mL suggests low likelihood of bacterial infection; PCT &lt;0.5 or 80% decrease from peak supports stopping antibiotics.
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="pk-pd">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Pharmacokinetics/Pharmacodynamics (PK/PD)</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Pattern</th>
+                            <th>Parameter</th>
+                            <th>Drug Classes</th>
+                            <th>Optimization Strategy</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Time-dependent</strong></td>
+                            <td>fT &gt; MIC</td>
+                            <td>β-lactams, carbapenems</td>
+                            <td>Extended/continuous infusion, frequent dosing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Concentration-dependent</strong></td>
+                            <td>Cmax/MIC</td>
+                            <td>Aminoglycosides, daptomycin, metronidazole</td>
+                            <td>High-dose, extended-interval (once daily)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AUC-dependent</strong></td>
+                            <td>AUC/MIC</td>
+                            <td>Fluoroquinolones, vancomycin, azithromycin</td>
+                            <td>Optimize total daily dose</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="pearl-box">
+                    <div class="pearl-title">💎 CLINICAL PEARL</div>
+                    <strong>Extended infusion piperacillin-tazobactam:</strong> 4-hour infusion (vs 30-min) improves fT&gt;MIC, shown to reduce mortality in critically ill patients with Pseudomonas infections (BLING III trial, Lancet 2022).
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Vancomycin Dosing (IDSA 2020)</div>
+                    <ul>
+                        <li><strong>Target:</strong> AUC/MIC 400-600 (replaces trough-based dosing)</li>
+                        <li><strong>Loading dose:</strong> 25-30 mg/kg (actual body weight) for serious infections</li>
+                        <li><strong>Maintenance:</strong> 15-20 mg/kg q8-12h, adjust based on AUC</li>
+                        <li><strong>AUC monitoring preferred:</strong> Two-level (Bayesian) approach most accurate</li>
+                        <li><strong>Nephrotoxicity risk:</strong> AUC &gt;600 or trough &gt;20 increases risk</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="resistance">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Antimicrobial Resistance Mechanisms</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Mechanism</th>
+                            <th>Examples</th>
+                            <th>Clinical Relevance</th>
+                        </tr>
+                        <tr>
+                            <td><strong>β-lactamase production</strong></td>
+                            <td>ESBL, AmpC, KPC, NDM</td>
+                            <td>ESBLs: use carbapenems; CRE: ceftazidime-avibactam, meropenem-vaborbactam</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Altered PBPs</strong></td>
+                            <td>MRSA (mecA → PBP2a)</td>
+                            <td>Resistant to all β-lactams except ceftaroline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Efflux pumps</strong></td>
+                            <td>Pseudomonas, Acinetobacter</td>
+                            <td>Multi-drug resistance, intrinsic resistance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Target modification</strong></td>
+                            <td>VRE (vanA/vanB), FQ resistance (gyrA)</td>
+                            <td>VanA: high-level resistance; VanB: susceptible to teicoplanin</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Decreased permeability</strong></td>
+                            <td>Porin mutations (Pseudomonas OprD)</td>
+                            <td>Carbapenem resistance in Pseudomonas</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 CDC URGENT THREATS (2019)</div>
+                    <ul>
+                        <li><strong>Carbapenem-resistant Acinetobacter (CRAB)</strong></li>
+                        <li><strong>Candida auris</strong> — often pan-resistant, healthcare transmission</li>
+                        <li><strong>Clostridioides difficile</strong></li>
+                        <li><strong>Carbapenem-resistant Enterobacterales (CRE)</strong></li>
+                        <li><strong>Drug-resistant Neisseria gonorrhoeae</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: ESBL vs AmpC</div>
+                    <ul>
+                        <li><strong>ESBLs (CTX-M, TEM, SHV):</strong> Plasmid-mediated, inhibited by clavulanate in vitro (but don't use clinically), use carbapenems</li>
+                        <li><strong>AmpC (SPACE organisms):</strong> Chromosomal, NOT inhibited by clavulanate, inducible with cephalosporins → use carbapenems or cefepime</li>
+                        <li><strong>SPACE:</strong> Serratia, Pseudomonas/Providencia, Acinetobacter, Citrobacter, Enterobacter</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="culture-interpretation">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Culture Interpretation & Common Contaminants</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                <div class="subsection">
+                    <div class="subsection-title">Blood Culture Interpretation</div>
+                    <ul>
+                        <li><strong>Always pathogens:</strong> S. aureus, S. pneumoniae, β-hemolytic strep, Enterobacterales, Pseudomonas, Candida, Listeria</li>
+                        <li><strong>Usually contaminants:</strong> Coagulase-negative staph (CoNS), Corynebacterium, Bacillus (non-anthracis), Propionibacterium</li>
+                        <li><strong>CoNS interpretation:</strong> Likely pathogen if ≥2 positive bottles, same species, patient with intravascular device, or immunocompromised</li>
+                    </ul>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE</div>
+                    <p><strong>Scenario:</strong> Post-op patient with fever, 1 of 2 blood cultures positive for coagulase-negative staphylococcus at 36 hours.</p>
+                    <p><strong>Answer:</strong> Most likely contaminant. Do not treat. Repeat cultures if clinically concerned. True CoNS bacteremia typically has ≥2 positive cultures with identical species.</p>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Time to Positivity (TTP)</div>
+                    <ul>
+                        <li>Earlier positivity (&lt;12-14 hours) suggests higher bacterial burden</li>
+                        <li>S. aureus bacteremia: TTP &lt;12h associated with endocarditis, metastatic infection</li>
+                        <li>Contaminants often have longer TTP (>24-48 hours)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 2: ANTIBIOTICS ======================= -->
+<section class="section" id="antibiotics">
+    <div class="section-header">
+        <h2>💊 Antibiotic Classes & Spectrum</h2>
+        <span class="icon">💉</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="penicillins">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Penicillins</h3>
+                <span class="badge">CORE</span>
+            </div>
+            <div class="topic-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Class</th>
+                            <th>Agents</th>
+                            <th>Spectrum</th>
+                            <th>Key Uses</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Natural</strong></td>
+                            <td>Penicillin G/V</td>
+                            <td>Strep, syphilis, Listeria</td>
+                            <td>Strep pharyngitis, syphilis, endocarditis (viridans)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Anti-staphylococcal</strong></td>
+                            <td>Nafcillin, oxacillin, dicloxacillin</td>
+                            <td>MSSA only</td>
+                            <td>MSSA bacteremia, endocarditis (preferred)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Aminopenicillins</strong></td>
+                            <td>Ampicillin, amoxicillin</td>
+                            <td>+ Enterococcus, Listeria, H. flu</td>
+                            <td>Listeria meningitis, enterococcal infections</td>
+                        </tr>
+                        <tr>
+                            <td><strong>+ β-lactamase inhibitor</strong></td>
+                            <td>Amox-clav, amp-sulbactam</td>
+                            <td>+ anaerobes, β-lactamase producers</td>
+                            <td>Bite wounds, aspiration PNA, diabetic foot</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Anti-pseudomonal</strong></td>
+                            <td>Piperacillin-tazobactam</td>
+                            <td>Broad including Pseudomonas</td>
+                            <td>HAP/VAP, neutropenic fever, intra-abdominal</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Anti-staphylococcal Penicillins</div>
+                    <strong>Nafcillin/oxacillin remain FIRST-LINE for MSSA bacteremia and endocarditis</strong> — superior outcomes vs vancomycin for MSSA. Cefazolin is acceptable alternative (better for renal dosing). Never use vancomycin for MSSA if alternatives available.
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 NAFCILLIN TOXICITY</div>
+                    <ul>
+                        <li><strong>Interstitial nephritis:</strong> More common than with other β-lactams</li>
+                        <li><strong>Neutropenia:</strong> With prolonged use (&gt;2 weeks)</li>
+                        <li><strong>Hepatotoxicity:</strong> Transaminase elevation</li>
+                        <li><strong>Hypokalemia:</strong> High sodium load</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="cephalosporins">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Cephalosporins</h3>
+                <span class="badge">CORE</span>
+            </div>
+            <div class="topic-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Generation</th>
+                            <th>IV Agent</th>
+                            <th>PO Agent</th>
+                            <th>Spectrum Notes</th>
+                        </tr>
+                        <tr>
+                            <td><strong>1st</strong></td>
+                            <td>Cefazolin</td>
+                            <td>Cephalexin</td>
+                            <td>MSSA, strep; surgical prophylaxis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2nd</strong></td>
+                            <td>Cefuroxime, cefoxitin</td>
+                            <td>Cefuroxime axetil</td>
+                            <td>Better GN; cefoxitin covers anaerobes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3rd</strong></td>
+                            <td>Ceftriaxone, ceftazidime</td>
+                            <td>Cefixime, cefpodoxime</td>
+                            <td>Excellent GN; ceftazidime for Pseudomonas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4th</strong></td>
+                            <td>Cefepime</td>
+                            <td>—</td>
+                            <td>+ Pseudomonas, stable to AmpC</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5th</strong></td>
+                            <td>Ceftaroline</td>
+                            <td>—</td>
+                            <td>+ MRSA (only β-lactam!)</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="mnemonic">
+                    <div class="mnemonic-title">📝 MEMORY AID</div>
+                    <div class="mnemonic-text">"1st → Skin, 2nd → Sinuses, 3rd → Serious (meningitis), 4th → Fierce (Pseudomonas), 5th → MRSA Fighter"</div>
+                </div>
+                
+                <div class="pearl-box">
+                    <div class="pearl-title">💎 CEFTRIAXONE PEARLS</div>
+                    <ul>
+                        <li><strong>Long half-life:</strong> Once-daily dosing (even for meningitis: 2g q12h)</li>
+                        <li><strong>Biliary excretion:</strong> No renal adjustment needed</li>
+                        <li><strong>Caution:</strong> Biliary sludge (especially with TPN), avoid with calcium-containing infusions in neonates</li>
+                        <li><strong>NOT for Pseudomonas:</strong> Use ceftazidime or cefepime</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Cefepime Neurotoxicity</div>
+                    <strong>Cefepime-induced encephalopathy:</strong> Particularly in renal impairment. Presents with altered mental status, myoclonus, seizures. EEG shows triphasic waves. Stop cefepime; hemodialysis can remove drug.
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="carbapenems">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Carbapenems</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Spectrum</th>
+                            <th>Key Differences</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Meropenem</strong></td>
+                            <td>Broadest; GP, GN, anaerobes, Pseudomonas</td>
+                            <td>CNS penetration (meningitis); less seizure risk</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Imipenem-cilastatin</strong></td>
+                            <td>Similar to meropenem</td>
+                            <td>Higher seizure risk; cilastatin prevents renal metabolism</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ertapenem</strong></td>
+                            <td>NO Pseudomonas, NO Acinetobacter</td>
+                            <td>Once daily; OPAT-friendly; good for ESBL</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 CARBAPENEM CAUTIONS</div>
+                    <ul>
+                        <li><strong>Seizures:</strong> Imipenem > meropenem; risk factors: CNS disease, renal failure, high doses</li>
+                        <li><strong>C. difficile:</strong> High risk; use judiciously</li>
+                        <li><strong>Drug interaction:</strong> Valproic acid levels ↓ 90% — contraindicated together</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: When to Use Carbapenems</div>
+                    <ul>
+                        <li><strong>ESBL infections:</strong> Carbapenems are drug of choice</li>
+                        <li><strong>Severe intra-abdominal infections:</strong> Especially if prior antibiotics</li>
+                        <li><strong>Hospital-acquired infections with resistance risk</strong></li>
+                        <li><strong>NOT first-line:</strong> Avoid if narrower spectrum will work (stewardship)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="fluoroquinolones">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Fluoroquinolones</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Spectrum Highlights</th>
+                            <th>Key Uses</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Ciprofloxacin</strong></td>
+                            <td>Best Pseudomonas; poor GP coverage</td>
+                            <td>UTI, Pseudomonas, GI infections</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Levofloxacin</strong></td>
+                            <td>+ Strep pneumoniae ("respiratory FQ")</td>
+                            <td>CAP, UTI, prostatitis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Moxifloxacin</strong></td>
+                            <td>Best GP; + anaerobes; NO Pseudomonas</td>
+                            <td>CAP, AECB; NO urine (not renally excreted)</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 FDA BLACK BOX WARNINGS</div>
+                    <ul>
+                        <li><strong>Tendinitis/rupture:</strong> Risk ↑ with age &gt;60, steroids, transplant recipients; Achilles most common</li>
+                        <li><strong>Peripheral neuropathy:</strong> May be irreversible</li>
+                        <li><strong>CNS effects:</strong> Seizures, psychosis, confusion</li>
+                        <li><strong>QT prolongation:</strong> Especially moxifloxacin</li>
+                        <li><strong>Aortic aneurysm/dissection:</strong> Avoid if known aneurysm or risk factors</li>
+                        <li><strong>Hypoglycemia:</strong> Especially in diabetics on sulfonylureas</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: FQ Resistance</div>
+                    <strong>Rising E. coli resistance:</strong> 20-30% in many areas. Check local antibiogram before empiric use for UTI. Do NOT use FQ for empiric gonorrhea (high resistance).
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE</div>
+                    <p><strong>Scenario:</strong> 68-year-old on prednisone for COPD presents with sudden Achilles pain/swelling after starting levofloxacin.</p>
+                    <p><strong>Answer:</strong> Stop fluoroquinolone immediately. Diagnose tendinopathy (may need MRI). Conservative management; avoid rupture with rest and immobilization.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="vancomycin">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Vancomycin</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                <div class="subsection">
+                    <div class="subsection-title">Spectrum</div>
+                    <div class="spectrum">
+                        <span class="spectrum-badge gp">Gram-positive ONLY</span>
+                        <span class="spectrum-badge mrsa">MRSA</span>
+                    </div>
+                    <ul>
+                        <li>MRSA, MSSA (but inferior to nafcillin for MSSA)</li>
+                        <li>Coagulase-negative staph</li>
+                        <li>Streptococci (including penicillin-resistant pneumococcus)</li>
+                        <li>Enterococcus faecalis (not VRE)</li>
+                        <li>C. difficile (oral only for C. diff colitis)</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA 2020 Vancomycin Dosing Guidelines</div>
+                    <ul>
+                        <li><strong>Target:</strong> AUC/MIC 400-600 (preferred over trough)</li>
+                        <li><strong>Loading:</strong> 25-30 mg/kg (actual body weight) for serious infections</li>
+                        <li><strong>Maintenance:</strong> 15-20 mg/kg q8-12h based on renal function</li>
+                        <li><strong>Monitoring:</strong> AUC-guided (Bayesian) preferred; if trough-based, target 15-20 for serious infections</li>
+                    </ul>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 VANCOMYCIN TOXICITY</div>
+                    <ul>
+                        <li><strong>Nephrotoxicity:</strong> Risk increases with AUC &gt;600, trough &gt;20, concurrent nephrotoxins (pip-tazo controversial)</li>
+                        <li><strong>Red man syndrome:</strong> Histamine release from rapid infusion (NOT allergy); slow infusion rate</li>
+                        <li><strong>Ototoxicity:</strong> Rare; may be irreversible</li>
+                        <li><strong>DRESS/drug rash:</strong> Can be severe</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Vancomycin MIC Creep</div>
+                    <ul>
+                        <li><strong>MIC ≤1:</strong> Standard dosing adequate</li>
+                        <li><strong>MIC = 2:</strong> Borderline; may have treatment failures</li>
+                        <li><strong>MIC ≥4:</strong> Resistant; use alternative (daptomycin, linezolid, ceftaroline)</li>
+                        <li><strong>hVISA:</strong> Heteroresistant VISA; standard susceptibility testing may miss; suspect if slow clinical response</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="aminoglycosides">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Aminoglycosides</h3>
+                <span class="badge">CORE</span>
+            </div>
+            <div class="topic-content">
+                <div class="subsection">
+                    <div class="subsection-title">Key Agents</div>
+                    <ul>
+                        <li><strong>Gentamicin:</strong> Synergy for enterococcal/streptococcal endocarditis</li>
+                        <li><strong>Tobramycin:</strong> Best anti-pseudomonal; inhaled for CF</li>
+                        <li><strong>Amikacin:</strong> Broadest; often active against gentamicin-resistant organisms</li>
+                        <li><strong>Streptomycin:</strong> TB, tularemia, plague</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">PK/PD & Dosing</div>
+                    <ul>
+                        <li><strong>Concentration-dependent killing:</strong> High Cmax/MIC ratio desired</li>
+                        <li><strong>Post-antibiotic effect:</strong> Continued killing after drug cleared</li>
+                        <li><strong>Extended-interval dosing (once daily):</strong> Higher peak, lower toxicity</li>
+                        <li><strong>Traditional dosing:</strong> Still used for synergy (e.g., endocarditis: gentamicin 1 mg/kg q8h)</li>
+                    </ul>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 TOXICITY</div>
+                    <ul>
+                        <li><strong>Nephrotoxicity:</strong> Usually reversible; risk ↑ with duration, other nephrotoxins</li>
+                        <li><strong>Ototoxicity:</strong> Vestibular (gentamicin, streptomycin) or cochlear (amikacin); may be irreversible</li>
+                        <li><strong>Neuromuscular blockade:</strong> Rare; risk in myasthenia gravis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="other-abx">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Other Important Antibiotics</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Daptomycin</div>
+                    <ul>
+                        <li><strong>Spectrum:</strong> Gram-positive only; excellent MRSA, VRE activity</li>
+                        <li><strong>Mechanism:</strong> Calcium-dependent membrane depolarization</li>
+                        <li><strong>Key uses:</strong> MRSA bacteremia, right-sided endocarditis, complicated SSTI</li>
+                        <li><strong>Contraindicated in pneumonia:</strong> Inactivated by pulmonary surfactant</li>
+                        <li><strong>Toxicity:</strong> CPK elevation (check weekly); eosinophilic pneumonia</li>
+                        <li><strong>Dosing:</strong> 6 mg/kg for bacteremia; 8-10 mg/kg may improve outcomes</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Linezolid</div>
+                    <ul>
+                        <li><strong>Spectrum:</strong> Gram-positive including MRSA, VRE</li>
+                        <li><strong>Mechanism:</strong> Oxazolidinone; inhibits 50S ribosome initiation</li>
+                        <li><strong>Key uses:</strong> MRSA pneumonia (penetrates lung well), VRE infections</li>
+                        <li><strong>100% oral bioavailability:</strong> IV = PO dosing</li>
+                        <li><strong>Toxicity:</strong> Myelosuppression (thrombocytopenia > anemia), peripheral/optic neuropathy, serotonin syndrome with SSRIs, lactic acidosis</li>
+                        <li><strong>Duration limit:</strong> Use &lt;2 weeks if possible (myelosuppression)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Metronidazole</div>
+                    <ul>
+                        <li><strong>Spectrum:</strong> Anaerobes (NOT aerobic bacteria), protozoa</li>
+                        <li><strong>Key uses:</strong> C. difficile, intra-abdominal infections, bacterial vaginosis, trichomoniasis, amebiasis, giardiasis</li>
+                        <li><strong>Excellent oral bioavailability</strong></li>
+                        <li><strong>Toxicity:</strong> Disulfiram reaction with alcohol, metallic taste, peripheral neuropathy (prolonged use)</li>
+                        <li><strong>CNS penetration:</strong> Excellent; used for brain abscesses (anaerobic component)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Trimethoprim-Sulfamethoxazole (TMP-SMX)</div>
+                    <ul>
+                        <li><strong>Spectrum:</strong> CA-MRSA, PCP, Nocardia, Stenotrophomonas, Listeria</li>
+                        <li><strong>Key uses:</strong> PCP prophylaxis/treatment, CA-MRSA SSTI, UTI</li>
+                        <li><strong>Toxicity:</strong> Hyperkalemia, myelosuppression (especially with methotrexate), rash/SJS, crystalluria</li>
+                        <li><strong>Drug interactions:</strong> Warfarin (↑ INR), methotrexate toxicity, ACE-I (hyperkalemia)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Doxycycline</div>
+                    <ul>
+                        <li><strong>Spectrum:</strong> Atypicals (Mycoplasma, Chlamydia, Legionella), MRSA, Rickettsia, spirochetes</li>
+                        <li><strong>Key uses:</strong> CAP (atypical coverage), MRSA SSTI, STIs, Lyme disease, RMSF, malaria prophylaxis</li>
+                        <li><strong>Safe in renal failure:</strong> No adjustment needed</li>
+                        <li><strong>Toxicity:</strong> Photosensitivity, esophageal ulceration (take with water, upright), teeth discoloration (avoid in children &lt;8)</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Daptomycin vs Linezolid for MRSA</div>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Daptomycin</th>
+                            <th>Linezolid</th>
+                        </tr>
+                        <tr>
+                            <td>Pneumonia</td>
+                            <td>❌ NO (inactivated by surfactant)</td>
+                            <td>✅ YES (excellent lung penetration)</td>
+                        </tr>
+                        <tr>
+                            <td>Bacteremia</td>
+                            <td>✅ Preferred</td>
+                            <td>✅ Alternative</td>
+                        </tr>
+                        <tr>
+                            <td>Oral option</td>
+                            <td>❌ IV only</td>
+                            <td>✅ 100% bioavailability</td>
+                        </tr>
+                        <tr>
+                            <td>Key toxicity</td>
+                            <td>CPK elevation</td>
+                            <td>Myelosuppression</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 3: RESPIRATORY INFECTIONS ======================= -->
+<section class="section" id="respiratory">
+    <div class="section-header">
+        <h2>🫁 Respiratory Infections</h2>
+        <span class="icon">🦠</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="cap">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Community-Acquired Pneumonia (CAP)</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 ATS/IDSA CAP Guidelines (2019)</div>
+                    Major changes from prior guidelines:
+                    <ul>
+                        <li>Eliminated "HCAP" category — treat based on risk factors, not healthcare exposure</li>
+                        <li>Recommend against routine procalcitonin to determine need for antibiotics in CAP</li>
+                        <li>Recommend against corticosteroids routinely (except if refractory shock)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Common Pathogens</div>
+                    <ul>
+                        <li><strong>Most common overall:</strong> S. pneumoniae</li>
+                        <li><strong>Atypicals:</strong> Mycoplasma, Chlamydophila, Legionella</li>
+                        <li><strong>Viral:</strong> Influenza, RSV, SARS-CoV-2, rhinovirus</li>
+                        <li><strong>Aspiration:</strong> Anaerobes (especially elderly, altered mental status)</li>
+                        <li><strong>No pathogen identified:</strong> Up to 50% of cases</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Empiric Treatment (ATS/IDSA 2019)</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Setting</th>
+                                <th>Preferred Regimen</th>
+                                <th>Alternative</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Outpatient, healthy</strong></td>
+                                <td>Amoxicillin 1g TID OR doxycycline OR macrolide (if resistance &lt;25%)</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Outpatient, comorbidities</strong></td>
+                                <td>Amox-clav + macrolide OR respiratory FQ monotherapy</td>
+                                <td>Cephalosporin + macrolide</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Inpatient, non-severe</strong></td>
+                                <td>β-lactam (ceftriaxone, ampicillin-sulbactam) + macrolide</td>
+                                <td>Respiratory FQ monotherapy</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Inpatient, severe (ICU)</strong></td>
+                                <td>β-lactam + macrolide</td>
+                                <td>β-lactam + respiratory FQ</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: MRSA/Pseudomonas Coverage in CAP</div>
+                    <strong>Only add MRSA/Pseudomonas coverage if:</strong>
+                    <ul>
+                        <li>Prior respiratory isolation of MRSA or Pseudomonas</li>
+                        <li>Recent hospitalization AND parenteral antibiotics (both required)</li>
+                    </ul>
+                    <strong>Do NOT routinely add based on:</strong> Nursing home residence alone, recent hospitalization without antibiotics
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Severity Assessment: CURB-65</div>
+                    <ul>
+                        <li><strong>C</strong>onfusion</li>
+                        <li><strong>U</strong>remia (BUN &gt;20 mg/dL)</li>
+                        <li><strong>R</strong>espiratory rate ≥30</li>
+                        <li><strong>B</strong>lood pressure (SBP &lt;90 or DBP ≤60)</li>
+                        <li><strong>65</strong> years or older</li>
+                    </ul>
+                    <p><strong>Score interpretation:</strong> 0-1: outpatient; 2: short inpatient or close outpatient; ≥3: inpatient/ICU</p>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE: Legionella</div>
+                    <p><strong>Scenario:</strong> 55-year-old smoker returning from cruise ship with fever, dry cough, diarrhea, confusion, hyponatremia (Na 128).</p>
+                    <p><strong>Clues:</strong> Travel (water source), GI symptoms, hyponatremia, confusion out of proportion to pneumonia severity</p>
+                    <p><strong>Diagnosis:</strong> Legionella pneumophila — urine antigen (detects L. pneumophila serogroup 1)</p>
+                    <p><strong>Treatment:</strong> Azithromycin or fluoroquinolone (preferred over β-lactams)</p>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Duration of Therapy</div>
+                    <ul>
+                        <li><strong>Minimum 5 days</strong> for most CAP</li>
+                        <li>Should be afebrile for 48-72 hours before stopping</li>
+                        <li>Clinically stable (HR, RR, BP, O2, mental status)</li>
+                        <li><strong>Longer duration (7-14 days):</strong> Legionella, Pseudomonas, MRSA, lung abscess</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="hap-vap">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Hospital-Acquired & Ventilator-Associated Pneumonia</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Definitions</div>
+                    <ul>
+                        <li><strong>HAP:</strong> Pneumonia occurring ≥48 hours after hospital admission (not incubating at admission)</li>
+                        <li><strong>VAP:</strong> Pneumonia occurring &gt;48 hours after endotracheal intubation</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 ATS/IDSA HAP/VAP Guidelines (2016)</div>
+                    <strong>Key risk factors for MDR pathogens:</strong>
+                    <ul>
+                        <li>IV antibiotics in prior 90 days</li>
+                        <li>Septic shock at time of VAP</li>
+                        <li>ARDS preceding VAP</li>
+                        <li>≥5 days hospitalization prior to VAP</li>
+                        <li>Acute renal replacement therapy prior to VAP</li>
+                        <li><strong>Most important:</strong> Local antibiogram data (>10-20% resistance = add coverage)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Common Pathogens</div>
+                    <ul>
+                        <li><strong>Gram-negative:</strong> Pseudomonas aeruginosa, Klebsiella, E. coli, Enterobacter, Acinetobacter</li>
+                        <li><strong>MRSA:</strong> Especially if prior colonization, hemodialysis, prior antibiotics</li>
+                        <li><strong>Polymicrobial:</strong> Common</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Empiric Treatment</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Risk Category</th>
+                                <th>Regimen</th>
+                            </tr>
+                            <tr>
+                                <td><strong>No MDR risk factors</strong></td>
+                                <td>Single agent: Pip-tazo, cefepime, levofloxacin, or meropenem</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MDR risk factors OR high mortality risk</strong></td>
+                                <td>Two anti-pseudomonal agents (different classes) + MRSA coverage (vancomycin or linezolid)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: De-escalation</div>
+                    <ul>
+                        <li><strong>De-escalate based on culture results at 48-72 hours</strong></li>
+                        <li>If cultures negative and patient improving, consider stopping MRSA coverage</li>
+                        <li>Narrowest effective spectrum reduces resistance selection and C. diff risk</li>
+                        <li><strong>Duration:</strong> 7 days for most VAP (not 14-21 days as previously)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="aspiration">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Aspiration Pneumonia & Lung Abscess</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Key Concepts</div>
+                    <ul>
+                        <li><strong>Aspiration pneumonitis:</strong> Chemical injury from gastric acid; does NOT require antibiotics unless secondary infection develops</li>
+                        <li><strong>Aspiration pneumonia:</strong> Infection from aspirated oropharyngeal bacteria; requires antibiotics</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Aspiration Pneumonia</div>
+                    <ul>
+                        <li><strong>Risk factors:</strong> Dysphagia, altered consciousness, GERD, NG tube, poor dentition</li>
+                        <li><strong>Pathogens:</strong> Streptococci, anaerobes (if poor dentition/periodontal disease), gram-negatives (if hospitalized)</li>
+                        <li><strong>Location:</strong> Right lower lobe (when upright), posterior segments of upper lobes (when supine)</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Anaerobic Coverage</div>
+                    <strong>Anaerobic coverage NOT routinely needed</strong> for aspiration pneumonia unless:
+                    <ul>
+                        <li>Severe periodontal disease</li>
+                        <li>Putrid sputum</li>
+                        <li>Lung abscess or empyema present</li>
+                        <li>Evidence of necrotizing pneumonia</li>
+                    </ul>
+                    <strong>If needed:</strong> Ampicillin-sulbactam, amoxicillin-clavulanate, or add metronidazole
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Lung Abscess</div>
+                    <ul>
+                        <li><strong>Etiology:</strong> Aspiration (most common), post-obstruction (cancer), hematogenous (Staph, septic emboli)</li>
+                        <li><strong>Microbiology:</strong> Polymicrobial; anaerobes + streptococci; consider MRSA if risk factors</li>
+                        <li><strong>Treatment:</strong> Antibiotics (ampicillin-sulbactam, clindamycin, or metronidazole + β-lactam)</li>
+                        <li><strong>Duration:</strong> Until cavity resolves or minimal stable residual (often 4-8 weeks)</li>
+                        <li><strong>Drainage:</strong> Consider if &gt;6 cm, not responding to antibiotics, or empyema</li>
+                    </ul>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE</div>
+                    <p><strong>Scenario:</strong> 62-year-old alcoholic with poor dentition presents with 3 weeks of fever, productive cough with foul-smelling sputum. CXR shows cavitary lesion in right lower lobe.</p>
+                    <p><strong>Diagnosis:</strong> Lung abscess (aspiration, anaerobes)</p>
+                    <p><strong>Treatment:</strong> Ampicillin-sulbactam or clindamycin × weeks until cavity resolves</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="tb">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Tuberculosis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Diagnosis</div>
+                    <ul>
+                        <li><strong>TST (PPD):</strong> Positive based on risk category (≥5mm, ≥10mm, ≥15mm)</li>
+                        <li><strong>IGRA (QuantiFERON, T-SPOT):</strong> More specific, single visit, not affected by BCG</li>
+                        <li><strong>Sputum AFB smear:</strong> 3 specimens; smear-positive = higher infectivity</li>
+                        <li><strong>Sputum culture:</strong> Gold standard; takes 2-6 weeks</li>
+                        <li><strong>NAAT (GeneXpert):</strong> Rapid (within hours); can detect rifampin resistance</li>
+                    </ul>
+                </div>
+                
+                <div class="mnemonic">
+                    <div class="mnemonic-title">📝 TST INTERPRETATION</div>
+                    <div class="mnemonic-text">≥5mm: HIV, close contacts, CXR fibrotic changes, immunosuppressed<br>
+                    ≥10mm: High-risk groups (immigrants, IVDU, healthcare workers)<br>
+                    ≥15mm: Low-risk individuals</div>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment of Active TB</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Drug</th>
+                                <th>Mechanism</th>
+                                <th>Key Toxicity</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Isoniazid (INH)</strong></td>
+                                <td>Inhibits mycolic acid synthesis</td>
+                                <td>Hepatotoxicity, peripheral neuropathy (give pyridoxine)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Rifampin (RIF)</strong></td>
+                                <td>Inhibits RNA polymerase</td>
+                                <td>Hepatotoxicity, orange secretions, CYP450 inducer</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pyrazinamide (PZA)</strong></td>
+                                <td>Disrupts membrane function</td>
+                                <td>Hepatotoxicity, hyperuricemia, arthralgias</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ethambutol (EMB)</strong></td>
+                                <td>Inhibits arabinosyl transferase</td>
+                                <td>Optic neuritis (dose-related, reversible)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 ATS/CDC/IDSA TB Guidelines</div>
+                    <strong>Standard regimen for drug-susceptible TB:</strong>
+                    <ul>
+                        <li><strong>Intensive phase:</strong> RIPE × 2 months</li>
+                        <li><strong>Continuation phase:</strong> INH + RIF × 4 months (total 6 months)</li>
+                        <li><strong>Directly observed therapy (DOT):</strong> Strongly recommended</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Latent TB Treatment</div>
+                    <ul>
+                        <li><strong>3HP:</strong> Weekly INH + rifapentine × 12 weeks (preferred for most)</li>
+                        <li><strong>4R:</strong> Daily rifampin × 4 months</li>
+                        <li><strong>9H:</strong> Daily INH × 9 months (traditional but long)</li>
+                        <li><strong>Always check for active TB</strong> before treating LTBI (symptoms, CXR)</li>
+                    </ul>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 TB DRUG INTERACTIONS</div>
+                    <ul>
+                        <li><strong>Rifampin is potent CYP450 inducer:</strong> Decreases levels of warfarin, OCPs, HIV meds, immunosuppressants, methadone</li>
+                        <li><strong>Rifabutin:</strong> Less CYP450 induction; use with HIV meds</li>
+                        <li><strong>INH:</strong> Inhibits monoamine oxidase; tyramine reaction possible</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 4: CNS INFECTIONS ======================= -->
+<section class="section" id="cns">
+    <div class="section-header">
+        <h2>🧠 CNS Infections</h2>
+        <span class="icon">🦠</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="bacterial-meningitis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Bacterial Meningitis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 MEDICAL EMERGENCY</div>
+                    <strong>Give antibiotics within 1 hour of presentation.</strong> Delays in antibiotic administration increase mortality. Do NOT wait for LP if will delay antibiotics.
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Pathogens by Risk Group</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Age/Risk Factor</th>
+                                <th>Common Pathogens</th>
+                                <th>Empiric Therapy</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Adult (18-50)</strong></td>
+                                <td>S. pneumoniae, N. meningitidis</td>
+                                <td>Ceftriaxone + vancomycin</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Age &gt;50</strong></td>
+                                <td>+ Listeria monocytogenes</td>
+                                <td>Ceftriaxone + vancomycin + ampicillin</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Immunocompromised</strong></td>
+                                <td>+ Listeria, gram-negatives</td>
+                                <td>Ceftriaxone + vancomycin + ampicillin (± meropenem)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Neurosurgery/trauma</strong></td>
+                                <td>S. aureus, gram-negatives</td>
+                                <td>Vancomycin + cefepime (or meropenem)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA Meningitis Guidelines (2004, reaffirmed)</div>
+                    <strong>Dexamethasone:</strong>
+                    <ul>
+                        <li>Give 0.15 mg/kg q6h × 4 days <strong>BEFORE or WITH first dose of antibiotics</strong></li>
+                        <li>Benefit proven for S. pneumoniae meningitis (↓ mortality, neurologic sequelae)</li>
+                        <li>Continue only if pneumococcal meningitis confirmed (or suspected)</li>
+                        <li>Less clear benefit for other pathogens</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">CSF Findings</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Bacterial</th>
+                                <th>Viral</th>
+                                <th>TB/Fungal</th>
+                            </tr>
+                            <tr>
+                                <td>Opening pressure</td>
+                                <td>↑↑ (&gt;25 cmH₂O)</td>
+                                <td>Normal-↑</td>
+                                <td>↑</td>
+                            </tr>
+                            <tr>
+                                <td>WBC count</td>
+                                <td>&gt;1000 (often &gt;10,000)</td>
+                                <td>10-500</td>
+                                <td>50-500</td>
+                            </tr>
+                            <tr>
+                                <td>Predominant cell</td>
+                                <td>Neutrophils (&gt;80%)</td>
+                                <td>Lymphocytes</td>
+                                <td>Lymphocytes</td>
+                            </tr>
+                            <tr>
+                                <td>Glucose</td>
+                                <td>&lt;40 mg/dL</td>
+                                <td>Normal</td>
+                                <td>↓</td>
+                            </tr>
+                            <tr>
+                                <td>Protein</td>
+                                <td>&gt;250 mg/dL</td>
+                                <td>&lt;100</td>
+                                <td>↑ (100-500)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Listeria Coverage</div>
+                    <strong>Add ampicillin for Listeria coverage if:</strong>
+                    <ul>
+                        <li>Age ≥50 years</li>
+                        <li>Immunocompromised (steroids, transplant, HIV, malignancy)</li>
+                        <li>Alcoholism</li>
+                        <li>Pregnancy</li>
+                    </ul>
+                    <strong>Ceftriaxone does NOT cover Listeria.</strong>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE</div>
+                    <p><strong>Scenario:</strong> 68-year-old with fever, headache, stiff neck, altered mental status. CSF shows 2500 WBC (90% PMNs), glucose 25, protein 320.</p>
+                    <p><strong>Management:</strong></p>
+                    <ol>
+                        <li>Dexamethasone (before or with antibiotics)</li>
+                        <li>Ceftriaxone + vancomycin + ampicillin (age &gt;50 = Listeria coverage)</li>
+                        <li>CT head if focal deficits or papilledema before LP</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="encephalitis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Encephalitis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Key Features Distinguishing from Meningitis</div>
+                    <ul>
+                        <li><strong>Altered mental status/personality changes</strong> — hallmark</li>
+                        <li>Seizures</li>
+                        <li>Focal neurologic deficits</li>
+                        <li>Movement disorders</li>
+                        <li>Meningismus may be present or absent</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Etiology</div>
+                    <ul>
+                        <li><strong>HSV-1:</strong> Most common cause of sporadic encephalitis (treat empirically!)</li>
+                        <li><strong>Arboviruses:</strong> West Nile, Eastern equine, La Crosse (seasonal, summer-fall)</li>
+                        <li><strong>VZV:</strong> Especially immunocompromised</li>
+                        <li><strong>Autoimmune:</strong> Anti-NMDA receptor encephalitis (young women, ovarian teratoma)</li>
+                    </ul>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 HSV ENCEPHALITIS</div>
+                    <ul>
+                        <li><strong>Start acyclovir empirically</strong> — do not wait for PCR results</li>
+                        <li><strong>MRI:</strong> Temporal lobe involvement (T2/FLAIR hyperintensity)</li>
+                        <li><strong>EEG:</strong> Periodic lateralizing epileptiform discharges (PLEDs)</li>
+                        <li><strong>CSF HSV PCR:</strong> May be negative early; repeat if high suspicion</li>
+                        <li><strong>Treatment:</strong> IV acyclovir 10 mg/kg q8h × 14-21 days</li>
+                        <li><strong>Mortality without treatment:</strong> 70%</li>
+                    </ul>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE: HSV Encephalitis</div>
+                    <p><strong>Scenario:</strong> 35-year-old with 3 days of fever, headache, confusion, and new-onset seizures. MRI shows bilateral temporal lobe enhancement. CSF shows lymphocytic pleocytosis.</p>
+                    <p><strong>Answer:</strong> HSV encephalitis. Start IV acyclovir immediately. Send CSF HSV PCR.</p>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE: West Nile</div>
+                    <p><strong>Scenario:</strong> 72-year-old in late summer with fever, weakness, flaccid paralysis, tremor. CSF lymphocytic pleocytosis.</p>
+                    <p><strong>Answer:</strong> West Nile virus neuroinvasive disease. Polio-like flaccid paralysis is characteristic. Diagnosis: serum/CSF WNV IgM. No specific treatment.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="brain-abscess">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Brain Abscess</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Etiology & Sources</div>
+                    <ul>
+                        <li><strong>Contiguous spread (40-50%):</strong> Sinusitis, otitis, dental infection → frontal/temporal lobe</li>
+                        <li><strong>Hematogenous (25%):</strong> Endocarditis, pulmonary AVMs, lung abscess → multiple abscesses</li>
+                        <li><strong>Trauma/neurosurgery:</strong> S. aureus predominant</li>
+                        <li><strong>Cryptogenic (25%):</strong> No source identified</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Microbiology</div>
+                    <ul>
+                        <li><strong>Polymicrobial common</strong> (30-60%)</li>
+                        <li><strong>Streptococci:</strong> Viridans group, S. anginosus (milleri) group</li>
+                        <li><strong>Anaerobes:</strong> Bacteroides, Fusobacterium, Prevotella</li>
+                        <li><strong>S. aureus:</strong> Trauma, neurosurgery, endocarditis</li>
+                        <li><strong>Gram-negatives:</strong> Otogenic source, immunocompromised</li>
+                        <li><strong>Immunocompromised:</strong> Nocardia, Toxoplasma, Aspergillus, Cryptococcus</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment</div>
+                    <ul>
+                        <li><strong>Empiric antibiotics:</strong> Ceftriaxone + metronidazole (± vancomycin if MRSA risk)</li>
+                        <li><strong>Duration:</strong> 6-8 weeks IV</li>
+                        <li><strong>Surgical drainage:</strong> Abscesses &gt;2.5 cm, mass effect, no improvement with antibiotics</li>
+                        <li><strong>Steroids:</strong> For significant mass effect (controversial)</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL</div>
+                    <strong>LP is contraindicated</strong> in brain abscess due to risk of herniation. Diagnosis is made by neuroimaging (MRI with contrast: ring-enhancing lesion with restricted diffusion).
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Continuing in next section... -->
+
+<!-- ======================= SECTION 5: CARDIOVASCULAR INFECTIONS ======================= -->
+<section class="section" id="cardiovascular">
+    <div class="section-header">
+        <h2>❤️ Cardiovascular Infections</h2>
+        <span class="icon">🦠</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="endocarditis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Infective Endocarditis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 Modified Duke Criteria (AHA 2015)</div>
+                    <strong>Definite IE:</strong> 2 major, OR 1 major + 3 minor, OR 5 minor criteria
+                    <br><br>
+                    <strong>Major Criteria:</strong>
+                    <ol>
+                        <li>Positive blood cultures (typical organism × 2, or persistently positive)</li>
+                        <li>Echo evidence (vegetation, abscess, new dehiscence, new valvular regurgitation)</li>
+                    </ol>
+                    <strong>Minor Criteria:</strong>
+                    <ul>
+                        <li>Predisposition (IVDU, structural heart disease)</li>
+                        <li>Fever ≥38°C</li>
+                        <li>Vascular phenomena (septic emboli, Janeway lesions, mycotic aneurysm)</li>
+                        <li>Immunologic phenomena (Osler nodes, Roth spots, + RF)</li>
+                        <li>Microbiologic evidence not meeting major criteria</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Microbiology</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Organism</th>
+                                <th>Patient Population</th>
+                                <th>Key Features</th>
+                            </tr>
+                            <tr>
+                                <td><strong>S. aureus</strong></td>
+                                <td>IVDU, healthcare-associated, devices</td>
+                                <td>Most common overall; acute presentation; high mortality</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Viridans streptococci</strong></td>
+                                <td>Native valve, dental procedures</td>
+                                <td>Subacute; large vegetations</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Enterococcus</strong></td>
+                                <td>Elderly, GI/GU procedures</td>
+                                <td>Requires combination therapy (β-lactam + aminoglycoside or ampicillin + ceftriaxone)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HACEK organisms</strong></td>
+                                <td>Native valve</td>
+                                <td>Fastidious; prolonged incubation; large vegetations</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Coagulase-negative staph</strong></td>
+                                <td>Prosthetic valves</td>
+                                <td>Presents &lt;1 year after surgery; often need surgery</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="mnemonic">
+                    <div class="mnemonic-title">📝 HACEK ORGANISMS</div>
+                    <div class="mnemonic-text"><strong>H</strong>aemophilus, <strong>A</strong>ggregatibacter, <strong>C</strong>ardiobacterium, <strong>E</strong>ikenella, <strong>K</strong>ingella</div>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Empiric Treatment (AHA 2015)</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Scenario</th>
+                                <th>Regimen</th>
+                                <th>Duration</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Native valve, empiric</strong></td>
+                                <td>Vancomycin + ceftriaxone</td>
+                                <td>Until culture data</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Prosthetic valve, empiric</strong></td>
+                                <td>Vancomycin + cefepime + gentamicin + rifampin</td>
+                                <td>Until culture data</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MSSA native valve</strong></td>
+                                <td>Nafcillin or oxacillin</td>
+                                <td>6 weeks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MRSA native valve</strong></td>
+                                <td>Vancomycin or daptomycin</td>
+                                <td>6 weeks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Viridans strep (pen-susceptible)</strong></td>
+                                <td>Penicillin G or ceftriaxone</td>
+                                <td>4 weeks (native), 6 weeks (prosthetic)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: S. aureus Bacteremia Workup</div>
+                    <strong>ALL S. aureus bacteremia requires:</strong>
+                    <ul>
+                        <li>Repeat blood cultures q48h until negative</li>
+                        <li>Echocardiogram (TEE preferred, especially for prosthetic valves/devices)</li>
+                        <li>Evaluation for metastatic infection</li>
+                        <li>Minimum 2 weeks IV antibiotics (4-6 weeks if complicated)</li>
+                    </ul>
+                    <strong>"Uncomplicated" criteria (can consider 2 weeks):</strong> No device, TEE negative, no metastatic infection, defervescence within 72h, negative repeat cultures within 4 days
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 SURGICAL INDICATIONS FOR IE</div>
+                    <ul>
+                        <li><strong>Heart failure:</strong> Due to severe valve dysfunction</li>
+                        <li><strong>Uncontrolled infection:</strong> Persistent bacteremia/fever &gt;5-7 days on appropriate therapy</li>
+                        <li><strong>Perivalvular extension:</strong> Abscess, fistula, heart block</li>
+                        <li><strong>Fungal endocarditis:</strong> Almost always requires surgery</li>
+                        <li><strong>Large vegetation (&gt;10mm) with embolic events</strong></li>
+                        <li><strong>Prosthetic valve endocarditis with relapse</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE</div>
+                    <p><strong>Scenario:</strong> 32-year-old IVDU with fever, new murmur at left sternal border (holosystolic, increases with inspiration). Blood cultures grow S. aureus.</p>
+                    <p><strong>Diagnosis:</strong> Tricuspid valve endocarditis (right-sided IE in IVDU)</p>
+                    <p><strong>Management:</strong> IV nafcillin/oxacillin (if MSSA) × 4-6 weeks; TEE to assess for complications</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="device-infections">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>CIED Infections (Pacemaker/ICD)</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Classification</div>
+                    <ul>
+                        <li><strong>Pocket infection:</strong> Localized to generator site (erythema, swelling, drainage, erosion)</li>
+                        <li><strong>Lead infection/CIED-IE:</strong> Vegetation on lead or valve</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Microbiology</div>
+                    <ul>
+                        <li><strong>Most common:</strong> Coagulase-negative staphylococci (CoNS)</li>
+                        <li><strong>S. aureus:</strong> More virulent; higher complication rate</li>
+                        <li><strong>Gram-negatives:</strong> Less common; may indicate contamination</li>
+                    </ul>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 KEY PRINCIPLE</div>
+                    <strong>Complete device removal is required</strong> for all CIED infections (pocket or lead). Antibiotics alone are insufficient and associated with high failure rates.
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL</div>
+                    S. aureus bacteremia in patient with CIED = presume device infection until proven otherwise. Get TEE and plan for device extraction.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 6: GI INFECTIONS ======================= -->
+<section class="section" id="gi">
+    <div class="section-header">
+        <h2>🦠 GI & Hepatobiliary Infections</h2>
+        <span class="icon">💊</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="cdiff">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Clostridioides difficile Infection</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA/SHEA CDI Guidelines (2021 Update)</div>
+                    <strong>Major change:</strong> Fidaxomicin now preferred over oral vancomycin for initial episodes (reduces recurrence)
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Diagnosis</div>
+                    <ul>
+                        <li><strong>Only test symptomatic patients</strong> (≥3 unformed stools/24h)</li>
+                        <li><strong>Preferred:</strong> NAAT (PCR) OR multistep algorithm (GDH + toxin EIA, then NAAT if discordant)</li>
+                        <li><strong>Do NOT test for cure:</strong> Can remain positive for weeks after treatment</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Severity Classification & Treatment</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Severity</th>
+                                <th>Criteria</th>
+                                <th>Treatment</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Non-severe</strong></td>
+                                <td>WBC &lt;15,000, Cr &lt;1.5</td>
+                                <td>Fidaxomicin 200mg BID × 10d (preferred) OR vancomycin 125mg PO QID × 10d</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Severe</strong></td>
+                                <td>WBC ≥15,000 OR Cr ≥1.5</td>
+                                <td>Fidaxomicin 200mg BID × 10d (preferred) OR vancomycin 125mg PO QID × 10d</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fulminant</strong></td>
+                                <td>Hypotension, ileus, megacolon</td>
+                                <td>Vancomycin 500mg PO/NG QID + metronidazole 500mg IV q8h ± vancomycin enemas</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Recurrent CDI</div>
+                    <ul>
+                        <li><strong>1st recurrence:</strong> Fidaxomicin (if vanc used initially) OR prolonged vancomycin taper-pulse</li>
+                        <li><strong>2nd recurrence:</strong> Vancomycin taper-pulse, then rifaximin chaser; consider bezlotoxumab (anti-toxin B antibody)</li>
+                        <li><strong>≥3 recurrences:</strong> Fecal microbiota transplant (FMT) highly effective (85-90% cure)</li>
+                    </ul>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 DO NOT USE</div>
+                    <ul>
+                        <li><strong>Metronidazole for non-fulminant CDI:</strong> Inferior to vancomycin; no longer first-line</li>
+                        <li><strong>Antimotility agents:</strong> Can precipitate toxic megacolon</li>
+                        <li><strong>Probiotics for treatment:</strong> Not proven effective; may use for prevention only</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="sbp">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Spontaneous Bacterial Peritonitis (SBP)</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Diagnosis</div>
+                    <ul>
+                        <li><strong>Ascitic fluid PMN ≥250 cells/mm³</strong> = diagnostic (treat empirically)</li>
+                        <li><strong>Culture positive in ~40%</strong> — negative cultures don't exclude SBP</li>
+                        <li><strong>Most common organisms:</strong> E. coli, Klebsiella, S. pneumoniae</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment</div>
+                    <ul>
+                        <li><strong>Empiric:</strong> Ceftriaxone 2g IV daily × 5 days</li>
+                        <li><strong>Alternative:</strong> Ciprofloxacin (if not on FQ prophylaxis)</li>
+                        <li><strong>Albumin:</strong> 1.5 g/kg on day 1, 1 g/kg on day 3 (if Cr &gt;1, BUN &gt;30, or bilirubin &gt;4) — reduces hepatorenal syndrome and mortality</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 AASLD Guidelines: SBP Prophylaxis</div>
+                    <ul>
+                        <li><strong>GI bleeding in cirrhosis:</strong> Ceftriaxone 1g daily × 7 days (all patients)</li>
+                        <li><strong>Prior SBP:</strong> Lifelong prophylaxis (ciprofloxacin or TMP-SMX)</li>
+                        <li><strong>Low protein ascites (&lt;1.5 g/dL) with renal dysfunction or liver failure:</strong> Consider prophylaxis</li>
+                    </ul>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE</div>
+                    <p><strong>Scenario:</strong> Cirrhotic patient with fever, abdominal pain, altered mental status. Paracentesis shows 400 PMNs/mm³.</p>
+                    <p><strong>Answer:</strong> SBP. Start ceftriaxone + albumin. Do NOT wait for cultures.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="cholangitis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Acute Cholangitis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="mnemonic">
+                    <div class="mnemonic-title">📝 CHARCOT'S TRIAD & REYNOLDS' PENTAD</div>
+                    <div class="mnemonic-text"><strong>Charcot's triad:</strong> Fever + RUQ pain + Jaundice<br>
+                    <strong>Reynolds' pentad:</strong> + Altered mental status + Hypotension (severe cholangitis)</div>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment Principles</div>
+                    <ul>
+                        <li><strong>Antibiotics:</strong> Cover gram-negatives and anaerobes (pip-tazo, ceftriaxone + metronidazole, or ampicillin-sulbactam)</li>
+                        <li><strong>Biliary drainage:</strong> Essential — ERCP within 24-48 hours (urgent if severe)</li>
+                        <li><strong>Duration:</strong> 4-7 days after adequate source control</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 7: GU INFECTIONS ======================= -->
+<section class="section" id="gu">
+    <div class="section-header">
+        <h2>🔬 Genitourinary Infections</h2>
+        <span class="icon">💊</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="uti">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Urinary Tract Infections</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA UTI Guidelines (2010 Cystitis, 2022 Catheter-Associated)</div>
+                    <strong>Key principle:</strong> Asymptomatic bacteriuria should NOT be treated (except pregnant women and pre-urologic surgery)
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Uncomplicated Cystitis (Women)</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Agent</th>
+                                <th>Regimen</th>
+                                <th>Notes</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Nitrofurantoin</strong></td>
+                                <td>100mg BID × 5 days</td>
+                                <td>Avoid if CrCl &lt;30 or pyelonephritis suspected</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TMP-SMX</strong></td>
+                                <td>DS BID × 3 days</td>
+                                <td>If local resistance &lt;20%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fosfomycin</strong></td>
+                                <td>3g single dose</td>
+                                <td>Less effective than multi-day regimens; convenient</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Fluoroquinolones NOT First-Line for UTI</div>
+                    <ul>
+                        <li>Reserve FQs for pyelonephritis or complicated UTI</li>
+                        <li>Risk of serious adverse effects outweighs benefit for cystitis</li>
+                        <li>Rising E. coli resistance (20-30% in many areas)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Pyelonephritis</div>
+                    <ul>
+                        <li><strong>Outpatient (mild):</strong> Fluoroquinolone × 5-7 days OR TMP-SMX × 14 days</li>
+                        <li><strong>Inpatient:</strong> Ceftriaxone, fluoroquinolone, or pip-tazo (if severe/septic)</li>
+                        <li><strong>Duration:</strong> 5-14 days depending on agent and response</li>
+                        <li><strong>Imaging:</strong> Consider CT if not improving by 48-72 hours (abscess? obstruction?)</li>
+                    </ul>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 CATHETER-ASSOCIATED UTI (CAUTI)</div>
+                    <ul>
+                        <li><strong>Only treat if symptomatic:</strong> Fever, suprapubic pain, CVA tenderness, altered mental status</li>
+                        <li><strong>Remove or replace catheter</strong> before obtaining cultures</li>
+                        <li><strong>Pyuria alone is NOT an indication for treatment</strong></li>
+                        <li><strong>Duration:</strong> 7 days (14 days if delayed response)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="prostatitis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Prostatitis</h3>
+                <span class="badge">CORE</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Acute Bacterial Prostatitis</div>
+                    <ul>
+                        <li><strong>Presentation:</strong> Fever, dysuria, perineal pain, exquisitely tender prostate</li>
+                        <li><strong>Pathogens:</strong> E. coli (most common), Pseudomonas, Enterococcus</li>
+                        <li><strong>Treatment:</strong> Fluoroquinolone or TMP-SMX × 4-6 weeks (need prostate penetration)</li>
+                        <li><strong>Avoid prostatic massage:</strong> Risk of bacteremia</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL</div>
+                    Chronic bacterial prostatitis is a cause of recurrent UTI in men with the same organism. Requires prolonged therapy (6-12 weeks) with prostate-penetrating antibiotic (FQ or TMP-SMX).
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 8: SKIN/SOFT TISSUE ======================= -->
+<section class="section" id="ssti">
+    <div class="section-header">
+        <h2>🦠 Skin & Soft Tissue Infections</h2>
+        <span class="icon">💊</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="cellulitis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Cellulitis & Erysipelas</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Key Distinctions</div>
+                    <ul>
+                        <li><strong>Erysipelas:</strong> Superficial (dermis), well-demarcated raised borders, "peau d'orange," face or lower extremity; β-hemolytic streptococci</li>
+                        <li><strong>Cellulitis:</strong> Deeper (dermis + subcutaneous), poorly demarcated; β-hemolytic strep or S. aureus</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA SSTI Guidelines (2014)</div>
+                    <strong>Purulent vs Non-Purulent determines MRSA coverage:</strong>
+                    <ul>
+                        <li><strong>Non-purulent (no abscess):</strong> β-hemolytic strep most likely; cephalexin or dicloxacillin</li>
+                        <li><strong>Purulent (abscess, pustule):</strong> S. aureus (often CA-MRSA); I&D ± TMP-SMX or doxycycline</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Type</th>
+                                <th>Outpatient</th>
+                                <th>Inpatient</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Non-purulent</strong></td>
+                                <td>Cephalexin, dicloxacillin</td>
+                                <td>Cefazolin, nafcillin</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Purulent (MRSA coverage)</strong></td>
+                                <td>TMP-SMX, doxycycline + I&D</td>
+                                <td>Vancomycin + I&D</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Cellulitis Mimics</div>
+                    <ul>
+                        <li><strong>Stasis dermatitis:</strong> Bilateral, chronic, scaling; no fever</li>
+                        <li><strong>DVT:</strong> Unilateral swelling, less erythema; check D-dimer/duplex</li>
+                        <li><strong>Gout:</strong> Joint involvement, tophi</li>
+                        <li><strong>Contact dermatitis:</strong> Pruritus, vesicles, linear pattern</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="necrotizing">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Necrotizing Fasciitis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 SURGICAL EMERGENCY</div>
+                    <strong>Mortality increases with every hour delay to debridement.</strong> Do NOT wait for imaging if clinical suspicion is high. Surgery is diagnostic and therapeutic.
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Classification</div>
+                    <ul>
+                        <li><strong>Type I (polymicrobial):</strong> Mixed aerobes + anaerobes; occurs in DM, PVD, post-operative</li>
+                        <li><strong>Type II (monomicrobial):</strong> Group A Strep ("flesh-eating bacteria") or S. aureus; healthy individuals</li>
+                        <li><strong>Type III:</strong> Clostridial myonecrosis (gas gangrene); trauma/surgery</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Clinical Features (vs Cellulitis)</div>
+                    <ul>
+                        <li><strong>Pain out of proportion</strong> to exam findings — key feature</li>
+                        <li>Rapid progression despite antibiotics</li>
+                        <li>Bullae, crepitus, skin necrosis</li>
+                        <li>Systemic toxicity (fever, tachycardia, hypotension)</li>
+                        <li>Wooden-hard induration on exam</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment</div>
+                    <ul>
+                        <li><strong>Surgical debridement:</strong> Urgent and often repeated</li>
+                        <li><strong>Antibiotics:</strong> Vancomycin + pip-tazo (or carbapenem) + clindamycin</li>
+                        <li><strong>Clindamycin:</strong> Inhibits toxin production (add for GAS or clostridial)</li>
+                        <li><strong>IVIG:</strong> May be considered for streptococcal toxic shock</li>
+                    </ul>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE</div>
+                    <p><strong>Scenario:</strong> Diabetic patient with leg wound, fever, hypotension, crepitus on exam, pain out of proportion to findings.</p>
+                    <p><strong>Answer:</strong> Necrotizing fasciitis. Immediate surgical debridement + broad-spectrum antibiotics (vanc + pip-tazo + clindamycin). Do NOT wait for CT.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="diabetic-foot">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Diabetic Foot Infections</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA DFI Guidelines (2012)</div>
+                    <strong>Severity guides treatment setting and antibiotics:</strong>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Microbiology (Depends on Severity)</div>
+                    <ul>
+                        <li><strong>Mild (superficial):</strong> S. aureus, β-hemolytic strep</li>
+                        <li><strong>Moderate-severe/chronic:</strong> Polymicrobial: Staph, Strep, Enterococcus, gram-negatives, anaerobes</li>
+                        <li><strong>MRSA risk factors:</strong> Prior MRSA, recent hospitalization/antibiotics, high local prevalence</li>
+                        <li><strong>Pseudomonas:</strong> Not routinely covered unless macerated wound, water exposure, or failure</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Key Management Principles</div>
+                    <ul>
+                        <li><strong>Wound care:</strong> Debridement, offloading</li>
+                        <li><strong>Assess for osteomyelitis:</strong> Probe-to-bone test, MRI</li>
+                        <li><strong>Vascular assessment:</strong> Many need revascularization</li>
+                        <li><strong>Antibiotics:</strong> Culture-directed when possible; duration 1-2 weeks for soft tissue, 4-6 weeks if osteomyelitis</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Probe-to-Bone Test</div>
+                    If sterile metal probe reaches bone through ulcer, probability of osteomyelitis is high (~85% positive predictive value). Order MRI for confirmation.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 9: BONE/JOINT ======================= -->
+<section class="section" id="bone-joint">
+    <div class="section-header">
+        <h2>🦴 Bone & Joint Infections</h2>
+        <span class="icon">🦠</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="osteomyelitis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Osteomyelitis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Classification</div>
+                    <ul>
+                        <li><strong>Hematogenous:</strong> Children (metaphysis of long bones), adults (vertebral)</li>
+                        <li><strong>Contiguous (with or without vascular insufficiency):</strong> Diabetic foot, pressure ulcers, post-surgical</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Microbiology</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Setting</th>
+                                <th>Common Pathogens</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Hematogenous (adults)</strong></td>
+                                <td>S. aureus (#1), gram-negatives, streptococci</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vertebral</strong></td>
+                                <td>S. aureus, gram-negatives, TB (Pott's disease), Brucella</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contiguous/diabetic</strong></td>
+                                <td>Polymicrobial: Staph, strep, GNR, anaerobes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IVDU</strong></td>
+                                <td>S. aureus, Pseudomonas (vertebral)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sickle cell</strong></td>
+                                <td>Salmonella (unique), S. aureus</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Diagnosis</div>
+                    <ul>
+                        <li><strong>Gold standard:</strong> Bone biopsy with culture (obtain before antibiotics when possible)</li>
+                        <li><strong>MRI:</strong> Most sensitive imaging (T1 hypointense, T2/STIR hyperintense, enhancement)</li>
+                        <li><strong>ESR/CRP:</strong> Elevated; useful for monitoring response</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA Vertebral Osteomyelitis Guidelines (2015)</div>
+                    <ul>
+                        <li><strong>Duration:</strong> 6 weeks of IV or highly bioavailable oral antibiotics</li>
+                        <li><strong>Oral antibiotics:</strong> May be used after initial IV therapy if good bioavailability and susceptibilities known (OVIVA trial)</li>
+                        <li><strong>Surgery:</strong> Neurologic deficit, spinal instability, failure of medical therapy</li>
+                    </ul>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE</div>
+                    <p><strong>Scenario:</strong> Sickle cell patient with femoral pain, fever, x-ray shows periosteal elevation.</p>
+                    <p><strong>Answer:</strong> Osteomyelitis — consider Salmonella (most common in sickle cell) alongside S. aureus. MRI for confirmation; bone biopsy ideal before antibiotics.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="septic-arthritis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Septic Arthritis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 ORTHOPAEDIC EMERGENCY</div>
+                    <strong>Delay in treatment leads to irreversible joint destruction.</strong> If suspected, aspirate joint immediately and start empiric antibiotics.
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Diagnosis</div>
+                    <ul>
+                        <li><strong>Synovial fluid WBC &gt;50,000</strong> (often &gt;100,000) with PMN predominance is highly suggestive</li>
+                        <li><strong>Gram stain positive</strong> in ~50%</li>
+                        <li><strong>Culture gold standard</strong></li>
+                        <li><strong>Blood cultures:</strong> Positive in ~50%</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Microbiology</div>
+                    <ul>
+                        <li><strong>S. aureus:</strong> Most common in adults</li>
+                        <li><strong>N. gonorrhoeae:</strong> Young, sexually active (disseminated gonococcal infection)</li>
+                        <li><strong>Streptococci, gram-negatives:</strong> Immunocompromised, IVDU</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment</div>
+                    <ul>
+                        <li><strong>Empiric:</strong> Vancomycin (MRSA coverage) + ceftriaxone (GN/gonococcal coverage)</li>
+                        <li><strong>Drainage:</strong> Serial aspiration or surgical drainage (especially hip, prosthetic joint)</li>
+                        <li><strong>Duration:</strong> Typically 2-4 weeks (longer for S. aureus)</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Disseminated Gonococcal Infection</div>
+                    <ul>
+                        <li><strong>Two syndromes:</strong> 
+                            <ol>
+                                <li>Triad of migratory polyarthralgia + tenosynovitis + pustular skin lesions (arthritis-dermatitis syndrome)</li>
+                                <li>Purulent monoarthritis (usually knee)</li>
+                            </ol>
+                        </li>
+                        <li><strong>Treatment:</strong> Ceftriaxone 1g IV daily × 7 days (switch to PO cefixime after 24-48h improvement)</li>
+                        <li><strong>Test and treat for chlamydia</strong> concurrently</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="pji">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Prosthetic Joint Infection</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Classification by Timing</div>
+                    <ul>
+                        <li><strong>Early (&lt;3 months):</strong> S. aureus, gram-negatives; perioperative inoculation</li>
+                        <li><strong>Delayed (3-12 months):</strong> CoNS, Propionibacterium; low-virulence organisms</li>
+                        <li><strong>Late (&gt;12 months):</strong> Hematogenous seeding; S. aureus, streptococci</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment Strategies</div>
+                    <ul>
+                        <li><strong>DAIR (debridement, antibiotics, implant retention):</strong> Early infection (&lt;30 days), stable implant, no sinus tract</li>
+                        <li><strong>One-stage exchange:</strong> Remove and replace in single surgery (Europe)</li>
+                        <li><strong>Two-stage exchange:</strong> Remove → antibiotic spacer → weeks of antibiotics → reimplant (most common in US)</li>
+                        <li><strong>Chronic suppression:</strong> When surgery not feasible</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Rifampin in PJI</div>
+                    <strong>Rifampin is critical for staphylococcal PJI when hardware retained</strong> — penetrates biofilm. Always use with second agent (never monotherapy → rapid resistance). Typically add after bacteremia cleared.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 10: SEPSIS ======================= -->
+<section class="section" id="sepsis">
+    <div class="section-header">
+        <h2>🔴 Sepsis & Septic Shock</h2>
+        <span class="icon">🚨</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="sepsis-definitions">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Sepsis Definitions & Diagnosis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 Sepsis-3 Definitions (JAMA 2016)</div>
+                    <ul>
+                        <li><strong>Sepsis:</strong> Life-threatening organ dysfunction caused by dysregulated host response to infection (SOFA score ≥2 points above baseline)</li>
+                        <li><strong>Septic shock:</strong> Sepsis + vasopressor requirement to maintain MAP ≥65 mmHg AND lactate &gt;2 mmol/L despite adequate fluid resuscitation</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">qSOFA (Quick SOFA) — Bedside Screening</div>
+                    <ul>
+                        <li>Respiratory rate ≥22/min</li>
+                        <li>Altered mental status (GCS &lt;15)</li>
+                        <li>Systolic BP ≤100 mmHg</li>
+                    </ul>
+                    <p><strong>≥2 criteria:</strong> High risk for poor outcome; evaluate for organ dysfunction with full SOFA</p>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">SOFA Score Components</div>
+                    <ul>
+                        <li><strong>Respiration:</strong> PaO₂/FiO₂ ratio</li>
+                        <li><strong>Coagulation:</strong> Platelet count</li>
+                        <li><strong>Liver:</strong> Bilirubin</li>
+                        <li><strong>Cardiovascular:</strong> MAP and vasopressor requirement</li>
+                        <li><strong>CNS:</strong> Glasgow Coma Scale</li>
+                        <li><strong>Renal:</strong> Creatinine and urine output</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: SIRS vs Sepsis-3</div>
+                    <ul>
+                        <li><strong>SIRS criteria no longer define sepsis</strong> — too sensitive, not specific (many non-infectious causes)</li>
+                        <li><strong>Sepsis-3 emphasizes organ dysfunction</strong> (SOFA score)</li>
+                        <li><strong>However:</strong> SIRS still useful for early identification; CMS quality measures still reference it</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="sepsis-management">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Sepsis Management: Hour-1 Bundle</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 TIME IS CRITICAL</div>
+                    <strong>Mortality increases 7-8% for each hour delay in antibiotic administration.</strong>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 Surviving Sepsis Campaign (2021 Update)</div>
+                    <strong>Hour-1 Bundle — Start immediately upon sepsis recognition:</strong>
+                    <ol>
+                        <li><strong>Measure lactate</strong> — remeasure if initial &gt;2 mmol/L</li>
+                        <li><strong>Obtain blood cultures</strong> before antibiotics (but don't delay abx &gt;45 min)</li>
+                        <li><strong>Administer broad-spectrum antibiotics</strong></li>
+                        <li><strong>Begin fluid resuscitation:</strong> 30 mL/kg crystalloid for hypotension or lactate ≥4 mmol/L</li>
+                        <li><strong>Apply vasopressors</strong> if hypotensive during/after fluids (target MAP ≥65)</li>
+                    </ol>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Fluid Resuscitation</div>
+                    <ul>
+                        <li><strong>Crystalloid preferred:</strong> Balanced solutions (LR, Plasmalyte) may be preferred over NS (less hyperchloremic acidosis)</li>
+                        <li><strong>Initial bolus:</strong> 30 mL/kg for hypotension or hypoperfusion</li>
+                        <li><strong>Reassess fluid responsiveness:</strong> Dynamic measures (pulse pressure variation, passive leg raise) preferred over static (CVP)</li>
+                        <li><strong>Avoid fluid overload:</strong> Associated with worse outcomes; reassess frequently</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Vasopressor Selection</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Agent</th>
+                                <th>Mechanism</th>
+                                <th>Role</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Norepinephrine</strong></td>
+                                <td>α1 > β1 agonist</td>
+                                <td>First-line; increases MAP with minimal chronotropy</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vasopressin</strong></td>
+                                <td>V1 receptor agonist</td>
+                                <td>Second-line; add at 0.03-0.04 U/min to reduce norepinephrine dose</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Epinephrine</strong></td>
+                                <td>α + β agonist</td>
+                                <td>Third-line if refractory; increases lactate (confounds monitoring)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dopamine</strong></td>
+                                <td>D1, β1, α1 (dose-dependent)</td>
+                                <td>NOT preferred — increased arrhythmia risk</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Corticosteroids in Septic Shock</div>
+                    <ul>
+                        <li><strong>Consider hydrocortisone 200 mg/day</strong> (50 mg IV q6h or continuous infusion) if hemodynamically unstable despite fluids + vasopressors</li>
+                        <li><strong>ADRENAL/APROCCHSS trials:</strong> Faster shock reversal, possible small mortality benefit in severe shock</li>
+                        <li><strong>Do NOT use ACTH stimulation test</strong> to guide decision</li>
+                        <li><strong>Fludrocortisone:</strong> Not routinely added (ADRENAL used hydrocortisone alone)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="source-control">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Source Control</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 SOURCE CONTROL IS ESSENTIAL</div>
+                    <strong>Identify and control source within 6-12 hours.</strong> Antibiotics alone cannot cure undrained infections.
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Interventions</div>
+                    <ul>
+                        <li><strong>Drain abscesses:</strong> Percutaneous or surgical</li>
+                        <li><strong>Remove infected devices:</strong> Central lines, pacemakers, prosthetic joints</li>
+                        <li><strong>Debride necrotic tissue:</strong> Necrotizing fasciitis, gangrenous bowel</li>
+                        <li><strong>Relieve obstructions:</strong> Biliary stent, nephrostomy tube</li>
+                        <li><strong>Definitive surgery:</strong> Cholecystectomy, bowel resection if needed</li>
+                    </ul>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE</div>
+                    <p><strong>Scenario:</strong> Patient with septic shock from cholangitis, not improving after 24 hours of antibiotics and fluids.</p>
+                    <p><strong>Answer:</strong> Needs emergent biliary drainage (ERCP or percutaneous). Source control is essential — antibiotics cannot sterilize obstructed biliary system.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="sepsis-abx">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Empiric Antibiotic Selection</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">General Principles</div>
+                    <ul>
+                        <li><strong>Broad-spectrum initially:</strong> Cover likely pathogens based on suspected source</li>
+                        <li><strong>Consider local resistance patterns:</strong> Know your antibiogram</li>
+                        <li><strong>Consider patient risk factors:</strong> Recent antibiotics, healthcare exposure, immunocompromise</li>
+                        <li><strong>De-escalate at 48-72 hours:</strong> Based on culture results and clinical response</li>
+                    </ul>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Suspected Source</th>
+                            <th>Empiric Regimen</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Unknown source</strong></td>
+                            <td>Vancomycin + piperacillin-tazobactam (or cefepime + metronidazole)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pulmonary (CAP)</strong></td>
+                            <td>Ceftriaxone + azithromycin (± vancomycin if MRSA risk)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pulmonary (HAP/VAP)</strong></td>
+                            <td>Vancomycin + antipseudomonal β-lactam (± aminoglycoside if MDR risk)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Intra-abdominal</strong></td>
+                            <td>Piperacillin-tazobactam or ceftriaxone + metronidazole</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Urinary</strong></td>
+                            <td>Ceftriaxone or fluoroquinolone (+ ampicillin if Enterococcus risk)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Skin/soft tissue</strong></td>
+                            <td>Vancomycin + piperacillin-tazobactam (cover MRSA + GN + anaerobes)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Neutropenic fever</strong></td>
+                            <td>Cefepime or piperacillin-tazobactam (monotherapy usually adequate initially)</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Duration</div>
+                    <ul>
+                        <li><strong>Most sepsis:</strong> 7-10 days typically adequate</li>
+                        <li><strong>Procalcitonin-guided:</strong> Can safely shorten duration; stop if PCT &lt;0.5 or ↓80% from peak</li>
+                        <li><strong>Longer courses:</strong> S. aureus bacteremia (2+ weeks), endocarditis, osteomyelitis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 11: HIV/AIDS ======================= -->
+<section class="section" id="hiv">
+    <div class="section-header">
+        <h2>🎗️ HIV/AIDS</h2>
+        <span class="icon">🦠</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="hiv-diagnosis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>HIV Diagnosis & Staging</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Diagnostic Testing (CDC 2014)</div>
+                    <ul>
+                        <li><strong>4th generation Ag/Ab combo:</strong> Initial screening (detects p24 antigen + HIV-1/2 antibodies); window period ~18 days</li>
+                        <li><strong>HIV-1/HIV-2 antibody differentiation:</strong> If initial test positive</li>
+                        <li><strong>HIV-1 RNA (viral load):</strong> If antibody tests indeterminate or acute infection suspected</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">AIDS-Defining Conditions (CD4 &lt;200 OR AIDS-defining illness)</div>
+                    <ul>
+                        <li><strong>Opportunistic infections:</strong> PCP, toxoplasmosis, cryptococcal meningitis, CMV retinitis, MAC</li>
+                        <li><strong>Malignancies:</strong> Kaposi sarcoma, primary CNS lymphoma, invasive cervical cancer</li>
+                        <li><strong>Other:</strong> HIV wasting, HIV encephalopathy</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: CD4 Thresholds for OIs</div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>CD4 Count</th>
+                                <th>Associated Infections</th>
+                            </tr>
+                            <tr>
+                                <td>&lt;500</td>
+                                <td>Kaposi sarcoma, TB, bacterial pneumonia</td>
+                            </tr>
+                            <tr>
+                                <td>&lt;200</td>
+                                <td>PCP, mucocutaneous candidiasis, Cryptococcus</td>
+                            </tr>
+                            <tr>
+                                <td>&lt;100</td>
+                                <td>Toxoplasmosis, Cryptosporidium</td>
+                            </tr>
+                            <tr>
+                                <td>&lt;50</td>
+                                <td>CMV, MAC, CNS lymphoma, progressive multifocal leukoencephalopathy (PML)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="ois">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Opportunistic Infections</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Pneumocystis jirovecii Pneumonia (PCP)</div>
+                    <ul>
+                        <li><strong>Presentation:</strong> Subacute dyspnea, dry cough, fever over days-weeks; bilateral interstitial infiltrates; elevated LDH</li>
+                        <li><strong>Diagnosis:</strong> Induced sputum or BAL with silver stain, DFA, or PCR; β-D-glucan elevated</li>
+                        <li><strong>Treatment:</strong> TMP-SMX (15-20 mg/kg/day TMP) × 21 days</li>
+                        <li><strong>Steroids if PaO2 &lt;70 or A-a gradient ≥35:</strong> Prednisone 40mg BID × 5 days, taper over 21 days</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Toxoplasma Encephalitis</div>
+                    <ul>
+                        <li><strong>Presentation:</strong> Headache, confusion, focal deficits, seizures; CD4 &lt;100</li>
+                        <li><strong>Imaging:</strong> Multiple ring-enhancing lesions with mass effect (basal ganglia common)</li>
+                        <li><strong>Diagnosis:</strong> + Toxoplasma IgG + typical imaging = empiric treatment</li>
+                        <li><strong>Treatment:</strong> Pyrimethamine + sulfadiazine + leucovorin × 6 weeks (then maintenance)</li>
+                        <li><strong>Alternative:</strong> TMP-SMX (preferred for prophylaxis)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Cryptococcal Meningitis</div>
+                    <ul>
+                        <li><strong>Presentation:</strong> Subacute headache, fever, altered mental status; CD4 &lt;100</li>
+                        <li><strong>Diagnosis:</strong> CSF cryptococcal antigen (very sensitive), India ink (less sensitive), culture</li>
+                        <li><strong>Treatment:</strong> Amphotericin B + flucytosine × 2 weeks (induction) → fluconazole (consolidation/maintenance)</li>
+                        <li><strong>Elevated ICP:</strong> Serial LPs for pressure management (goal: opening pressure &lt;20 cmH2O)</li>
+                    </ul>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE</div>
+                    <p><strong>Scenario:</strong> HIV+ patient with CD4 50 presents with weeks of headache, fever, neck stiffness. CSF shows elevated opening pressure, low WBC, low glucose. India ink positive.</p>
+                    <p><strong>Answer:</strong> Cryptococcal meningitis. Treat with amphotericin B + flucytosine. Perform serial LPs to manage elevated ICP.</p>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">CMV Disease (CD4 &lt;50)</div>
+                    <ul>
+                        <li><strong>CMV retinitis:</strong> "Pizza pie" appearance (hemorrhages + exudates); treat with ganciclovir or foscarnet; intravitreal + systemic</li>
+                        <li><strong>CMV colitis:</strong> Bloody diarrhea, ulcers on colonoscopy</li>
+                        <li><strong>CMV esophagitis:</strong> Large shallow ulcers (vs HSV: small deep ulcers)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Mycobacterium avium Complex (MAC)</div>
+                    <ul>
+                        <li><strong>Presentation:</strong> Fever, night sweats, weight loss, diarrhea, hepatosplenomegaly; CD4 &lt;50</li>
+                        <li><strong>Diagnosis:</strong> Blood cultures (isolator lysis-centrifugation), bone marrow biopsy</li>
+                        <li><strong>Treatment:</strong> Clarithromycin (or azithromycin) + ethambutol ± rifabutin</li>
+                        <li><strong>Prophylaxis:</strong> Azithromycin 1200mg weekly if CD4 &lt;50</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="oi-prophylaxis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>OI Prophylaxis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Infection</th>
+                            <th>CD4 Threshold</th>
+                            <th>Prophylaxis</th>
+                            <th>Stop When</th>
+                        </tr>
+                        <tr>
+                            <td><strong>PCP</strong></td>
+                            <td>&lt;200 or oropharyngeal candidiasis</td>
+                            <td>TMP-SMX DS daily (preferred)</td>
+                            <td>CD4 &gt;200 × 3 months</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Toxoplasma</strong></td>
+                            <td>&lt;100 + IgG+</td>
+                            <td>TMP-SMX DS daily</td>
+                            <td>CD4 &gt;200 × 3 months</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MAC</strong></td>
+                            <td>&lt;50</td>
+                            <td>Azithromycin 1200mg weekly</td>
+                            <td>CD4 &gt;100 × 3 months</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cryptococcus</strong></td>
+                            <td>After treatment</td>
+                            <td>Fluconazole 200mg daily</td>
+                            <td>CD4 &gt;100 × 3 months + ART × 1 year</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: TMP-SMX is a "2-for-1"</div>
+                    TMP-SMX DS daily provides prophylaxis for BOTH PCP AND Toxoplasma. If patient is sulfa-allergic, need separate agents (dapsone for PCP, pyrimethamine + leucovorin for toxo).
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="iris">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Immune Reconstitution Inflammatory Syndrome (IRIS)</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Definition</div>
+                    <ul>
+                        <li>Paradoxical clinical worsening after starting ART due to recovering immune response</li>
+                        <li><strong>Unmasking IRIS:</strong> Previously subclinical infection becomes symptomatic</li>
+                        <li><strong>Paradoxical IRIS:</strong> Worsening of known infection despite treatment</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Management</div>
+                    <ul>
+                        <li>Continue ART (unless life-threatening)</li>
+                        <li>Treat underlying OI</li>
+                        <li>NSAIDs or corticosteroids for severe inflammation</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: When to Start ART with OI?</div>
+                    <ul>
+                        <li><strong>Most OIs:</strong> Start ART within 2 weeks</li>
+                        <li><strong>TB:</strong> Start ART within 2-8 weeks (may delay if CD4 &gt;50 to reduce IRIS risk)</li>
+                        <li><strong>Cryptococcal meningitis:</strong> Delay ART 4-6 weeks (early ART increases mortality)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 12: FUNGAL INFECTIONS ======================= -->
+<section class="section" id="fungi">
+    <div class="section-header">
+        <h2>🍄 Fungal Infections</h2>
+        <span class="icon">🦠</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="candida">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Candidiasis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Candidemia</div>
+                    <ul>
+                        <li><strong>Risk factors:</strong> Central lines, TPN, broad-spectrum antibiotics, neutropenia, surgery</li>
+                        <li><strong>Always clinically significant:</strong> Never a contaminant</li>
+                        <li><strong>Treatment:</strong> Echinocandin preferred (caspofungin, micafungin, anidulafungin); fluconazole if species known susceptible and patient stable</li>
+                        <li><strong>Remove central line</strong> if possible</li>
+                        <li><strong>Duration:</strong> 2 weeks after first negative culture (assuming uncomplicated)</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA Candidiasis Guidelines (2016)</div>
+                    <strong>All patients with candidemia need:</strong>
+                    <ul>
+                        <li>Dilated fundoscopic exam (rule out endophthalmitis)</li>
+                        <li>Repeat blood cultures q48h until negative</li>
+                        <li>Echocardiogram if prolonged candidemia or prosthetic valve</li>
+                        <li>Central line removal when feasible</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Candida Species</div>
+                    <ul>
+                        <li><strong>C. albicans:</strong> Most common; usually fluconazole-susceptible</li>
+                        <li><strong>C. glabrata:</strong> Often fluconazole-resistant; use echinocandin</li>
+                        <li><strong>C. krusei:</strong> Intrinsically fluconazole-resistant</li>
+                        <li><strong>C. parapsilosis:</strong> Associated with catheters; may have reduced echinocandin susceptibility</li>
+                        <li><strong>C. auris:</strong> MDR, healthcare-associated, infection control emergency</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="aspergillus">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Aspergillosis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Clinical Syndromes</div>
+                    <ul>
+                        <li><strong>Invasive pulmonary aspergillosis (IPA):</strong> Immunocompromised (neutropenia, transplant); high mortality</li>
+                        <li><strong>Aspergilloma:</strong> Fungus ball in pre-existing cavity (TB, sarcoid); hemoptysis</li>
+                        <li><strong>Allergic bronchopulmonary aspergillosis (ABPA):</strong> Asthma/CF patients; eosinophilia, elevated IgE</li>
+                        <li><strong>Chronic pulmonary aspergillosis:</strong> Immunocompetent with structural lung disease</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Invasive Pulmonary Aspergillosis</div>
+                    <ul>
+                        <li><strong>CT findings:</strong> Halo sign (early), air crescent sign (later, with neutrophil recovery)</li>
+                        <li><strong>Galactomannan:</strong> Serum antigen; sensitivity varies (lower with prophylaxis/treatment)</li>
+                        <li><strong>BAL galactomannan:</strong> More sensitive than serum</li>
+                        <li><strong>Treatment:</strong> Voriconazole (first-line); alternatives: isavuconazole, liposomal amphotericin B</li>
+                    </ul>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 VORICONAZOLE TOXICITY</div>
+                    <ul>
+                        <li><strong>Visual disturbances:</strong> Photophobia, altered color vision (transient)</li>
+                        <li><strong>Hepatotoxicity:</strong> Monitor LFTs</li>
+                        <li><strong>Skin cancer risk:</strong> With long-term use; photoprotection essential</li>
+                        <li><strong>Drug interactions:</strong> CYP450 substrate and inhibitor (many interactions)</li>
+                        <li><strong>Fluorosis:</strong> With prolonged use (painful periostitis)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="endemic-fungi">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Endemic Mycoses</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Organism</th>
+                            <th>Geography</th>
+                            <th>Key Features</th>
+                            <th>Treatment</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Histoplasma</strong></td>
+                            <td>Ohio/Mississippi River valleys; bat/bird droppings</td>
+                            <td>Cave exploration, chicken coop; mediastinal lymphadenopathy; "buckshot" calcifications</td>
+                            <td>Mild: itraconazole; Severe: amphotericin B → itraconazole</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Blastomyces</strong></td>
+                            <td>Great Lakes, Ohio/Mississippi valleys</td>
+                            <td>Lung + skin (verrucous lesions); bone</td>
+                            <td>Mild: itraconazole; Severe: amphotericin B → itraconazole</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Coccidioides</strong></td>
+                            <td>Southwest US, San Joaquin Valley</td>
+                            <td>Desert dust; erythema nodosum, arthralgias; "valley fever"</td>
+                            <td>Fluconazole (CNS disease); itraconazole; amphotericin B if severe</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="clinical-vignette">
+                    <div class="vignette-title">📝 CLASSIC BOARD VIGNETTE: Histoplasmosis</div>
+                    <p><strong>Scenario:</strong> Patient from Ohio River valley with subacute pneumonia after spelunking. CXR shows hilar lymphadenopathy. Urine Histoplasma antigen positive.</p>
+                    <p><strong>Answer:</strong> Acute pulmonary histoplasmosis. Mild cases may self-resolve; treat moderate-severe with itraconazole or amphotericin B.</p>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Urine Antigen Testing</div>
+                    <strong>Histoplasma and Blastomyces urine antigens cross-react.</strong> Interpret in clinical context. Histoplasma antigen also useful for monitoring treatment response.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 13: VIRAL INFECTIONS ======================= -->
+<section class="section" id="viral">
+    <div class="section-header">
+        <h2>🦠 Viral Infections</h2>
+        <span class="icon">💊</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="influenza">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Influenza</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA Influenza Guidelines (2018)</div>
+                    <strong>Treat with antivirals if:</strong>
+                    <ul>
+                        <li>Hospitalized patients</li>
+                        <li>Severe/progressive illness (any setting)</li>
+                        <li>High-risk for complications (age ≥65, immunocompromised, chronic disease, pregnant, BMI ≥40, nursing home)</li>
+                        <li>Within 48 hours of symptom onset (any patient)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Antiviral Options</div>
+                    <ul>
+                        <li><strong>Oseltamivir:</strong> 75mg PO BID × 5 days (first-line)</li>
+                        <li><strong>Zanamivir:</strong> Inhaled; avoid in asthma/COPD</li>
+                        <li><strong>Peramivir:</strong> Single IV dose; useful if NPO</li>
+                        <li><strong>Baloxavir:</strong> Single PO dose; cap-dependent endonuclease inhibitor</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Influenza Complications</div>
+                    <ul>
+                        <li><strong>Primary viral pneumonia:</strong> Diffuse infiltrates, ARDS</li>
+                        <li><strong>Secondary bacterial pneumonia:</strong> S. aureus (including MRSA), S. pneumoniae; biphasic illness</li>
+                        <li><strong>Myocarditis</strong></li>
+                        <li><strong>Encephalitis</strong></li>
+                        <li><strong>Rhabdomyolysis</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="herpes">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Herpes Simplex Virus</h3>
+                <span class="badge">CORE</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Clinical Syndromes</div>
+                    <ul>
+                        <li><strong>Mucocutaneous:</strong> Orolabial (HSV-1), genital (HSV-2 > HSV-1)</li>
+                        <li><strong>Encephalitis:</strong> HSV-1; temporal lobe involvement; high mortality without treatment</li>
+                        <li><strong>Esophagitis:</strong> Immunocompromised; small deep ulcers (vs CMV large shallow)</li>
+                        <li><strong>Keratitis:</strong> Dendritic ulcer on fluorescein stain</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment</div>
+                    <ul>
+                        <li><strong>Mucocutaneous:</strong> Valacyclovir, acyclovir, famciclovir (oral)</li>
+                        <li><strong>Encephalitis:</strong> IV acyclovir 10 mg/kg q8h × 14-21 days</li>
+                        <li><strong>Disseminated/visceral:</strong> IV acyclovir</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="vzv">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Varicella-Zoster Virus</h3>
+                <span class="badge">CORE</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Herpes Zoster (Shingles)</div>
+                    <ul>
+                        <li><strong>Presentation:</strong> Painful vesicular rash in dermatomal distribution</li>
+                        <li><strong>Treatment:</strong> Valacyclovir 1g TID × 7 days (within 72h of rash onset)</li>
+                        <li><strong>Complications:</strong> Postherpetic neuralgia, disseminated zoster (immunocompromised)</li>
+                    </ul>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 HERPES ZOSTER OPHTHALMICUS</div>
+                    <ul>
+                        <li><strong>V1 (ophthalmic) distribution</strong></li>
+                        <li><strong>Hutchinson's sign:</strong> Vesicles on nose tip = nasociliary nerve involvement = high risk for eye complications</li>
+                        <li><strong>Urgent ophthalmology referral</strong></li>
+                        <li><strong>Treatment:</strong> Valacyclovir + ophthalmology management</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 14: PARASITES ======================= -->
+<section class="section" id="parasites">
+    <div class="section-header">
+        <h2>🪱 Parasitic Infections</h2>
+        <span class="icon">🦠</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="malaria">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Malaria</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 MEDICAL EMERGENCY</div>
+                    <strong>Consider malaria in ANY febrile patient with travel to endemic area.</strong> P. falciparum can be fatal within 24-48 hours.
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Species & Clinical Features</div>
+                    <ul>
+                        <li><strong>P. falciparum:</strong> Most severe; cerebral malaria, severe anemia, ARDS, hypoglycemia, renal failure</li>
+                        <li><strong>P. vivax/P. ovale:</strong> Hypnozoite stage (liver) → relapses; need primaquine for radical cure</li>
+                        <li><strong>P. malariae:</strong> Chronic infection; nephrotic syndrome</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Diagnosis</div>
+                    <ul>
+                        <li><strong>Thick smear:</strong> Screening (higher sensitivity)</li>
+                        <li><strong>Thin smear:</strong> Species identification, parasitemia quantification</li>
+                        <li><strong>Rapid diagnostic test:</strong> Antigen detection; good for non-endemic areas</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment</div>
+                    <ul>
+                        <li><strong>Uncomplicated (chloroquine-sensitive):</strong> Chloroquine</li>
+                        <li><strong>Uncomplicated (chloroquine-resistant, most areas):</strong> Artemether-lumefantrine (Coartem) OR atovaquone-proguanil (Malarone)</li>
+                        <li><strong>Severe malaria:</strong> IV artesunate (first-line); exchange transfusion if &gt;10% parasitemia</li>
+                        <li><strong>P. vivax/ovale:</strong> Add primaquine (after checking G6PD status) to prevent relapse</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Chloroquine Resistance</div>
+                    <strong>Assume chloroquine resistance for P. falciparum from sub-Saharan Africa and Southeast Asia.</strong> Only Central America (west of Panama Canal), Caribbean, and Middle East still have chloroquine-sensitive P. falciparum.
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="strongyloides">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Strongyloides</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 HYPERINFECTION SYNDROME</div>
+                    <strong>Life-threatening in immunocompromised (especially steroids).</strong> Screen and treat BEFORE immunosuppression in patients from endemic areas.
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Key Features</div>
+                    <ul>
+                        <li><strong>Autoinfection:</strong> Unique ability to complete life cycle within host → chronic infection for decades</li>
+                        <li><strong>Eosinophilia:</strong> May be only sign of chronic infection</li>
+                        <li><strong>Hyperinfection:</strong> Disseminated disease with gram-negative sepsis, meningitis, ARDS</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Diagnosis & Treatment</div>
+                    <ul>
+                        <li><strong>Stool O&P:</strong> Low sensitivity; multiple samples or concentration techniques</li>
+                        <li><strong>Serology:</strong> More sensitive but may cross-react with other helminths</li>
+                        <li><strong>Treatment:</strong> Ivermectin 200 mcg/kg daily × 2 days (uncomplicated); longer for hyperinfection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 15: TRAVEL MEDICINE ======================= -->
+<section class="section" id="travel">
+    <div class="section-header">
+        <h2>✈️ Travel Medicine & Tropical Diseases</h2>
+        <span class="icon">🌍</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="travelers-diarrhea">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Traveler's Diarrhea</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Etiology</div>
+                    <ul>
+                        <li><strong>ETEC (Enterotoxigenic E. coli):</strong> Most common cause worldwide</li>
+                        <li><strong>Other bacteria:</strong> Campylobacter (Southeast Asia), Salmonella, Shigella</li>
+                        <li><strong>Parasites:</strong> Giardia, Cyclospora, Cryptosporidium</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Treatment</div>
+                    <ul>
+                        <li><strong>Mild (tolerable):</strong> Hydration, loperamide</li>
+                        <li><strong>Moderate-severe:</strong> Azithromycin 1000mg × 1 (preferred) OR fluoroquinolone × 1-3 days</li>
+                        <li><strong>Avoid FQ in Southeast Asia:</strong> High Campylobacter FQ resistance</li>
+                        <li><strong>Bloody diarrhea:</strong> Avoid loperamide; antibiotics indicated</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="dengue">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Dengue Fever</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Clinical Features</div>
+                    <ul>
+                        <li><strong>"Breakbone fever":</strong> High fever, severe myalgias/arthralgias, retro-orbital headache</li>
+                        <li><strong>Rash:</strong> Maculopapular, "islands of white in a sea of red"</li>
+                        <li><strong>Labs:</strong> Thrombocytopenia, leukopenia, elevated AST/ALT</li>
+                    </ul>
+                </div>
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 SEVERE DENGUE (Dengue Hemorrhagic Fever)</div>
+                    <ul>
+                        <li><strong>Warning signs:</strong> Abdominal pain, persistent vomiting, pleural effusion, bleeding, lethargy</li>
+                        <li><strong>Plasma leak:</strong> Hemoconcentration, hypoalbuminemia</li>
+                        <li><strong>Treatment:</strong> Supportive; careful fluid management</li>
+                        <li><strong>Risk increases with secondary infection</strong> (different serotype)</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL</div>
+                    <strong>Avoid NSAIDs and aspirin in dengue</strong> — increase bleeding risk. Use acetaminophen for fever/pain.
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="typhoid">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Typhoid Fever</h3>
+                <span class="badge">CORE</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Clinical Features</div>
+                    <ul>
+                        <li><strong>Stepwise fever</strong> over first week</li>
+                        <li><strong>Relative bradycardia</strong> (pulse-temperature dissociation)</li>
+                        <li><strong>Rose spots:</strong> Faint salmon-colored macules on trunk</li>
+                        <li><strong>Hepatosplenomegaly</strong></li>
+                        <li><strong>Complications:</strong> Intestinal perforation, GI bleeding (week 3-4)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Diagnosis & Treatment</div>
+                    <ul>
+                        <li><strong>Blood culture:</strong> Best in first week</li>
+                        <li><strong>Stool culture:</strong> Better in weeks 2-3</li>
+                        <li><strong>Treatment:</strong> Fluoroquinolone or azithromycin (check resistance patterns); ceftriaxone if MDR</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 16: HAIs ======================= -->
+<section class="section" id="hais">
+    <div class="section-header">
+        <h2>🏥 Healthcare-Associated Infections</h2>
+        <span class="icon">🦠</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="clabsi">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Central Line-Associated Bloodstream Infection (CLABSI)</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Definition</div>
+                    <ul>
+                        <li>BSI in patient with central line in place within 48 hours</li>
+                        <li>No other apparent source of infection</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Microbiology</div>
+                    <ul>
+                        <li><strong>Coagulase-negative staphylococci:</strong> Most common</li>
+                        <li><strong>S. aureus:</strong> High morbidity</li>
+                        <li><strong>Enterococcus</strong></li>
+                        <li><strong>Gram-negatives:</strong> Especially in ICU, TPN</li>
+                        <li><strong>Candida:</strong> TPN, prolonged antibiotics</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA Catheter-Related Infection Guidelines (2009)</div>
+                    <strong>Line removal indications:</strong>
+                    <ul>
+                        <li>S. aureus (always remove)</li>
+                        <li>Candida (always remove)</li>
+                        <li>P. aeruginosa, MDR organisms</li>
+                        <li>Tunnel infection, port abscess</li>
+                        <li>Septic shock</li>
+                        <li>Persistent bacteremia (&gt;72h on appropriate therapy)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Prevention Bundle</div>
+                    <ul>
+                        <li>Hand hygiene</li>
+                        <li>Maximal sterile barrier precautions on insertion</li>
+                        <li>Chlorhexidine skin antisepsis</li>
+                        <li>Optimal site selection (avoid femoral in adults)</li>
+                        <li>Daily review of line necessity; prompt removal</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="ssi">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Surgical Site Infection (SSI)</h3>
+                <span class="badge">CORE</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="subsection">
+                    <div class="subsection-title">Classification</div>
+                    <ul>
+                        <li><strong>Superficial incisional:</strong> Skin and subcutaneous tissue only</li>
+                        <li><strong>Deep incisional:</strong> Fascia and muscle</li>
+                        <li><strong>Organ/space:</strong> Any part of anatomy opened during surgery</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Prevention</div>
+                    <ul>
+                        <li><strong>Timing of prophylaxis:</strong> Within 60 minutes of incision (120 min for vancomycin, FQ)</li>
+                        <li><strong>Redosing:</strong> For long procedures or significant blood loss</li>
+                        <li><strong>Duration:</strong> ≤24 hours post-op (no benefit from prolonged prophylaxis)</li>
+                        <li><strong>Standard agent:</strong> Cefazolin for most procedures</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 17: IMMUNOCOMPROMISED ======================= -->
+<section class="section" id="immunocompromised">
+    <div class="section-header">
+        <h2>🛡️ Infections in Immunocompromised Hosts</h2>
+        <span class="icon">🦠</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="neutropenic-fever">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Neutropenic Fever</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="danger-box">
+                    <div class="danger-title">🚨 ONCOLOGIC EMERGENCY</div>
+                    <strong>Empiric antibiotics within 1 hour of presentation.</strong> Fever may be only sign of serious infection.
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Definitions</div>
+                    <ul>
+                        <li><strong>Neutropenia:</strong> ANC &lt;500/µL (or expected to fall &lt;500)</li>
+                        <li><strong>Fever:</strong> Single temperature ≥38.3°C (101°F) OR ≥38.0°C (100.4°F) sustained for 1 hour</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 IDSA Neutropenic Fever Guidelines (2010)</div>
+                    <strong>Initial Empiric Therapy:</strong>
+                    <ul>
+                        <li><strong>Monotherapy:</strong> Anti-pseudomonal β-lactam (cefepime, pip-tazo, meropenem, or imipenem)</li>
+                        <li><strong>Add vancomycin if:</strong> Catheter infection, skin/soft tissue infection, pneumonia, hemodynamic instability, known MRSA colonization</li>
+                        <li><strong>Add antifungal if:</strong> Persistent fever after 4-7 days on antibiotics</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Risk Stratification (MASCC Score)</div>
+                    <ul>
+                        <li><strong>High risk:</strong> Anticipated prolonged neutropenia (&gt;7 days), significant comorbidities, MASCC &lt;21</li>
+                        <li><strong>Low risk:</strong> Short duration neutropenia, no comorbidities, clinically stable — may consider outpatient oral therapy</li>
+                    </ul>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Fungal Coverage</div>
+                    <ul>
+                        <li><strong>Persistent fever after 4-7 days:</strong> Add empiric antifungal (caspofungin, liposomal amphotericin B, or voriconazole)</li>
+                        <li><strong>CT chest for persistent fever:</strong> Look for IPA (halo sign)</li>
+                        <li><strong>Galactomannan/β-D-glucan:</strong> Useful adjuncts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="transplant-infections">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Transplant-Related Infections Timeline</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Time Post-Transplant</th>
+                            <th>Predominant Infections</th>
+                        </tr>
+                        <tr>
+                            <td><strong>&lt;1 month</strong></td>
+                            <td>Nosocomial: SSI, line infections, HAP, C. diff; donor-derived infections</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1-6 months</strong></td>
+                            <td>Opportunistic: CMV, PCP, Aspergillus, reactivation (HBV, TB, endemic fungi)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>&gt;6 months</strong></td>
+                            <td>Community-acquired (if immunosuppression reduced); late CMV; EBV-related PTLD</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: CMV in Transplant</div>
+                    <ul>
+                        <li><strong>Highest risk:</strong> D+/R- (donor positive, recipient negative)</li>
+                        <li><strong>Prevention:</strong> Valganciclovir prophylaxis or preemptive monitoring</li>
+                        <li><strong>CMV syndrome:</strong> Fever, cytopenias, elevated LFTs</li>
+                        <li><strong>Tissue-invasive:</strong> Colitis, pneumonitis, retinitis</li>
+                        <li><strong>Treatment:</strong> IV ganciclovir or valganciclovir</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================= SECTION 18: PROPHYLAXIS ======================= -->
+<section class="section" id="prophylaxis">
+    <div class="section-header">
+        <h2>💉 Prophylaxis & Prevention</h2>
+        <span class="icon">🛡️</span>
+    </div>
+    <div class="section-content">
+
+        <div class="topic" id="surgical-prophylaxis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Surgical Prophylaxis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Procedure</th>
+                            <th>Recommended Agent</th>
+                            <th>Duration</th>
+                        </tr>
+                        <tr>
+                            <td>Most clean procedures</td>
+                            <td>Cefazolin</td>
+                            <td>Single dose (24h max)</td>
+                        </tr>
+                        <tr>
+                            <td>CABG, cardiac valve</td>
+                            <td>Cefazolin (± vancomycin if MRSA risk)</td>
+                            <td>≤48 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Colorectal</td>
+                            <td>Cefazolin + metronidazole (or ertapenem)</td>
+                            <td>Single dose</td>
+                        </tr>
+                        <tr>
+                            <td>GU (involving intestine)</td>
+                            <td>Cefazolin + metronidazole</td>
+                            <td>Single dose</td>
+                        </tr>
+                        <tr>
+                            <td>β-lactam allergy</td>
+                            <td>Vancomycin + aminoglycoside or aztreonam</td>
+                            <td>Single dose</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="high-yield">
+                    <div class="high-yield-title">⚡ BOARD PEARL: Timing</div>
+                    <ul>
+                        <li><strong>Within 60 minutes of incision</strong> for most agents</li>
+                        <li><strong>Within 120 minutes</strong> for vancomycin and fluoroquinolones (need infusion time)</li>
+                        <li><strong>Redose</strong> for long procedures (&gt;2 half-lives) or major blood loss</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="exposure-prophylaxis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Post-Exposure Prophylaxis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Exposure</th>
+                            <th>Prophylaxis</th>
+                            <th>Notes</th>
+                        </tr>
+                        <tr>
+                            <td><strong>HIV (needlestick)</strong></td>
+                            <td>3-drug ART × 28 days</td>
+                            <td>Start within 72h (ideally &lt;2h)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Meningococcal</strong></td>
+                            <td>Ciprofloxacin × 1 OR rifampin × 2d OR ceftriaxone × 1</td>
+                            <td>Close contacts within 7 days</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pertussis</strong></td>
+                            <td>Azithromycin × 5 days</td>
+                            <td>Close contacts within 21 days</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Influenza</strong></td>
+                            <td>Oseltamivir × 7-10 days</td>
+                            <td>High-risk contacts; institutional outbreaks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rabies</strong></td>
+                            <td>Wound care + RIG + vaccine series</td>
+                            <td>Unprovoked animal bite, bat exposure</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic" id="endocarditis-prophylaxis">
+            <div class="topic-header" onclick="toggleTopic(this)">
+                <h3>Endocarditis Prophylaxis</h3>
+                <span class="badge">HIGH YIELD</span>
+            </div>
+            <div class="topic-content">
+                
+                <div class="guideline-box">
+                    <div class="guideline-title">📘 AHA 2021 Update</div>
+                    <strong>Prophylaxis only for highest-risk cardiac conditions:</strong>
+                    <ul>
+                        <li>Prosthetic heart valve or prosthetic material used for valve repair</li>
+                        <li>Previous infective endocarditis</li>
+                        <li>Congenital heart disease (unrepaired cyanotic CHD, repaired with prosthetic material &lt;6 months, residual defect near prosthetic material)</li>
+                        <li>Cardiac transplant with valvulopathy</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Procedures Requiring Prophylaxis</div>
+                    <ul>
+                        <li><strong>Dental:</strong> Manipulation of gingival tissue, periapical region, or oral mucosa perforation</li>
+                        <li><strong>NOT routine:</strong> GI or GU procedures (unless established infection)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <div class="subsection-title">Regimen</div>
+                    <ul>
+                        <li><strong>Standard:</strong> Amoxicillin 2g PO 30-60 min before procedure</li>
+                        <li><strong>Penicillin allergy:</strong> Azithromycin 500mg or clindamycin 600mg</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer style="background: var(--primary); color: white; padding: 30px 20px; margin-top: 40px; text-align: center;">
+    <h3 style="margin-bottom: 15px;">🦠 ABIM Infectious Disease Study Guide</h3>
+    <p style="opacity: 0.9; font-size: 0.9rem;">Evidence-based content from IDSA, ATS, SCCM, CDC, and major society guidelines</p>
+    <p style="opacity: 0.7; font-size: 0.8rem; margin-top: 15px;">For educational purposes only. Verify all clinical decisions with current guidelines and institutional protocols.</p>
+    <div style="margin-top: 20px;">
+        <a href="index.html" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 20px; margin: 0 5px;">📚 Clinical Suite Home</a>
+        <a href="id_guide.html" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 20px; margin: 0 5px;">🦠 ID Quick Reference</a>
+        <a href="drug_reference_guide.html" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 20px; margin: 0 5px;">💊 Drug Guide</a>
+    </div>
+</footer>
+
+</main>
+
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+<script>
+    // Toggle topic expansion
+    function toggleTopic(header) {
+        const topic = header.parentElement;
+        topic.classList.toggle('collapsed');
+    }
+    
+    // Initialize all topics as expanded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Topics start expanded by default
+    });
+    
+    // Search functionality
+    const searchBox = document.getElementById('searchBox');
+    searchBox.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        const topics = document.querySelectorAll('.topic');
+        
+        topics.forEach(topic => {
+            const text = topic.textContent.toLowerCase();
+            if (query === '' || text.includes(query)) {
+                topic.style.display = 'block';
+            } else {
+                topic.style.display = 'none';
+            }
+        });
+    });
+    
+    // Back to top button
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 400) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+    
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
